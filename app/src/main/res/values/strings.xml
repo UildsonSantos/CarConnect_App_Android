@@ -1,3 +1,32 @@
 <resources>
     <string name="app_name">Car Connect</string>
+    <string name="blindado">Blindado</string>
+    <string name="ar_condicionado">Ar Condicionado</string>
+    <string name="automatico">Automático</string>
+    <string name="cadastro">Cadastro</string>
+    <string name="hidraulica">Hidráulica</string>
+    <string name="mecanica">Mecânica</string>
+    <string name="eletrica">Elétrica</string>
+    <string name="eletro_hidraulica">Eletro-hidráulica</string>
+    <string name="combustivel">Combustivel</string>
+    <string name="alcool">Álcool</string>
+    <string name="gasolina">Gasolina</string>
+    <string name="diesel">Diesel</string>
+    <string name="eletrico">Elétrico</string>
+    <string name="nome">Nome</string>
+    <string name="tipo">Tipo</string>
+    <string name="cedan">Cedan</string>
+    <string name="hatch">Hatch</string>
+    <string name="luxo">Luxo</string>
+    <string name="conversivel">Conversível</string>
+    <string name="limpar">Limpar</string>
+    <string name="salvar">Salvar</string>
+    <string name="ano">Ano</string>
+    <string name="valor">Valor</string>
+    <string name="cor">Cor</string>
+    <string name="portas">Portas</string>
+    <string name="duas_portas">2 Portas</string>
+    <string name="quatro_portas">4 Portas</string>
+    <string name="flex">Flex</string>
+    <string name="carroceria">Carroceria</string>
 </resources>
