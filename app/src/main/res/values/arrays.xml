@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="image">
+        <item>@drawable/mercedes_benz_slc_300_branca_2018</item>
+        <item>@drawable/mercedes_benz_amg_gt63s_preta_2019</item>
+        <item>@drawable/bmw_m5_4_4_v8_cinza_2019</item>
+        <item>@drawable/ram_2500_laramie_cd_preta_2019</item>
+        <item>@drawable/audi_r8_v10_performance_amarelo_2022</item>
+        <item>@drawable/cadillac_escalade_sport_2021_blindado_preto</item>
+        <item>@drawable/dodge_charger_rt_verde_1970</item>
+        <item>@drawable/ferrari_488_spider_2018_vermelha</item>
+        <item>@drawable/jaguar_xj6_serie_iii_1983_verde</item>
+        <item>@drawable/range_rover_vogue_cinza_2021</item>
+        <item>@drawable/mclaren_570s_spider_amarela_2019</item>
+        <item>@drawable/meredes_benz_e300_exclusive_preta_2021</item>
+        <item>@drawable/mclaren_620r_preta_2020</item>
+        <item>@drawable/pagani_utopia</item>
+    </string-array>
+
+    <string-array name="nome">
+        <item>@string/mercedes_benz_slc_300_branca_2018</item>
+        <item>@string/mercedes_benz_amg_gt63s_preta_2019</item>
+        <item>@string/bmw_m5_4_4_v8_cinza_2019</item>
+        <item>@string/ram_2500_laramie_cd_preta_2019</item>
+        <item>@string/audi_r8_v10_performance_amarelo_2022</item>
+        <item>@string/cadillac_escalade_sport_2021_blindado_preto</item>
+        <item>@string/dodge_charger_rt_verde_1970</item>
+        <item>@string/ferrari_488_spider_2018_vermelha</item>
+        <item>@string/jaguar_xj6_serie_iii_1983_verde</item>
+        <item>@string/range_rover_vogue_cinza_2021</item>
+        <item>@string/mclaren_570s_spider_amarela_2019</item>
+        <item>@string/meredes_benz_e300_exclusive_preta_2021</item>
+        <item>@string/mclaren_620r_preta_2020</item>
+        <item>@string/pagani_utopia</item>
+    </string-array>
+
+    <integer-array name="ano">
+        <item>2018</item>
+        <item>2020</item>
+        <item>2019</item>
+        <item>2019</item>
+        <item>2022</item>
+        <item>2021</item>
+        <item>1970</item>
+        <item>2018</item>
+        <item>2021</item>
+        <item>2019</item>
+        <item>2021</item>
+        <item>2021</item>
+        <item>2020</item>
+        <item>2022</item>
+    </integer-array>
+
+    <string-array name="valor">
+        <item>339000</item>
+        <item>1195000</item>
+        <item>665000</item>
+        <item>489000</item>
+        <item>2090000</item>
+        <item>2090000</item>
+        <item>1490000</item>
+        <item>3890000</item>
+        <item>149000</item>
+        <item>899000</item>
+        <item>2950000</item>
+        <item>515000</item>
+        <item>4750000</item>
+        <item>12747750</item>
+    </string-array>
+
+    <string-array name="cor">
+        <item>@string/branco</item>
+        <item>@string/preco</item>
+        <item>@string/cinza</item>
+        <item>@string/preco</item>
+        <item>@string/preco</item>
+        <item>@string/preco</item>
+        <item>@string/verde</item>
+        <item>@string/vermelho_rosso_corsa</item>
+        <item>@string/verde</item>
+        <item>@string/cinza</item>
+        <item>@string/amarelo</item>
+        <item>@string/preto</item>
+        <item>@string/preto</item>
+        <item>@string/dourada</item>
+    </string-array>
+
+
+    <string-array name="carroceria">
+        <item>@string/conversivel</item>
+        <item>@string/cupe</item>
+        <item>@string/cupe</item>
+        <item>@string/picape</item>
+        <item>@string/cupe</item>
+        <item>@string/suv</item>
+        <item>@string/cupe</item>
+        <item>@string/conversivel</item>
+        <item>@string/sedan</item>
+        <item>@string/suv</item>
+        <item>@string/conversivel</item>
+        <item>@string/sedan</item>
+        <item>@string/cupe_super_esportivo</item>
+        <item>@string/cupe_super_esportivo</item>
+    </string-array>
+
+    <integer-array name="combustivel">
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+        <item>3</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+        <item>3</item>
+        <item>3</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+    </integer-array>
+
+    <integer-array name="portas">
+        <item>2</item>
+        <item>4</item>
+        <item>4</item>
+        <item>4</item>
+        <item>2</item>
+        <item>4</item>
+        <item>2</item>
+        <item>2</item>
+        <item>4</item>
+        <item>4</item>
+        <item>2</item>
+        <item>4</item>
+        <item>2</item>
+        <item>2</item>
+    </integer-array>
+
+
+    <string-array name="km">
+        <item>3315900</item>
+        <item>4147900</item>
+        <item>1948600</item>
+        <item>3099000</item>
+        <item>112400</item>
+        <item>419000</item>
+        <item>103400</item>
+        <item>882600</item>
+        <item>2482300</item>
+        <item>1108900</item>
+        <item>422900</item>
+        <item>747600</item>
+        <item>10600</item>
+        <item>0</item>
+    </string-array>
+
+    <integer-array name="blindagem">
+        <item>0</item>
+        <item>0</item>
+        <item>1</item>
+        <item>1</item>
+        <item>0</item>
+        <item>1</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>1</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+    </integer-array>
+
+
+    <integer-array name="ar_condicionado">
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>0</item>
+        <item>0</item>
+        <item>1</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+    </integer-array>
+
+
+    <string-array name="cambio">
+        <item>Câmbio automático 9 marchas 9G-TRONIC</item>
+        <item>Câmbio AMG SPEEDSHIFT MCT Transmissão esportiva de 9 velocidades</item>
+        <item>Câmbio automático de 8 marchas com Shift paddle</item>
+        <item>Câmbio automático de 6 marchas</item>
+        <item>Câmbio automático sequencial S Tronic de 7 marchas</item>
+        <item>Câmbio automático de 10 marchas</item>
+        <item>Cambio Automático de 3 velocidades</item>
+        <item>Câmbio F1 de 7 velocidades dupla embreagem</item>
+        <item>Cambio automático de 3 marchas</item>
+        <item>Câmbio automático sequencial de 8 marchas</item>
+        <item>Cambio automático sequencial de 7 velocidades</item>
+        <item>Câmbio automático sequencial de 9 marchas 9G-Tronic</item>
+        <item>Cambio automático sequencial de 7 velocidades</item>
+        <item>Câmbio Xtrac Manual de 7 velocidades</item>
+    </string-array>
+
+    <string-array name="aceleracao">
+        <item>5.8</item>
+        <item>3.2</item>
+        <item>3.4</item>
+        <item>11.0</item>
+        <item>3.2</item>
+        <item>6.3</item>
+        <item>9.5</item>
+        <item>3.0</item>
+        <item>9.8</item>
+        <item>7.8</item>
+        <item>3.2</item>
+        <item>6.2</item>
+        <item>2.9</item>
+        <item>2.9</item>
+    </string-array>
+
+    <integer-array name="velocidade_max">
+        <item>250</item>
+        <item>315</item>
+        <item>305</item>
+        <item>160</item>
+        <item>330</item>
+        <item>180</item>
+        <item>190</item>
+        <item>325</item>
+        <item>200</item>
+        <item>210</item>
+        <item>328</item>
+        <item>250</item>
+        <item>322</item>
+        <item>353</item>
+    </integer-array>
+
+    <string-array name="motor">
+        <item>2.0 Turbo 245 cv</item>
+        <item>4.0 V8 Bi-turbo de 639 cv</item>
+        <item>4.4 V8 600 cv</item>
+        <item>6.7 Turbo Diesel 365 cv</item>
+        <item>5.2 V10 610 cv</item>
+        <item>6.2 V8 420 cv</item>
+        <item>7.7 V8 440 cv</item>
+        <item>3.9 V8 Biturbo 670 cv</item>
+        <item>4.0 223 cv</item>
+        <item>3.0 TDV6 258 cv</item>
+        <item>3.8 V8 de 570 cv</item>
+        <item>2.0 258 cv</item>
+        <item>3.8 V8 620 cv</item>
+        <item>6.0 V12 Biturbo 852 cv</item>
+    </string-array>
+
+</resources>

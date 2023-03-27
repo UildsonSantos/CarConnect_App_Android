@@ -60,7 +60,7 @@
             android:layout_marginTop="28dp"
             android:autofillHints=""
             android:ems="10"
-            android:hint="@string/preco"
+            android:hint="@string/valor"
             android:inputType="numberDecimal"
             android:minHeight="48dp"
             android:textColorHint="#757575"
@@ -82,7 +82,7 @@
             app:layout_constraintTop_toBottomOf="@+id/editTextValor" />
 
         <TextView
-            android:id="@+id/textViewCarroceria"
+            android:id="@+id/textViewCarroceriaItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
@@ -246,7 +246,7 @@
             app:layout_constraintStart_toStartOf="@+id/guideline2" />
 
         <TextView
-            android:id="@+id/textViewAno"
+            android:id="@+id/textViewAnoItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
@@ -259,7 +259,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
-            android:text="@string/valor"
+            android:text="@string/preco"
             app:layout_constraintBottom_toTopOf="@+id/editTextValor"
             app:layout_constraintStart_toStartOf="@+id/guideline2" />
 
