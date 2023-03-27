@@ -1,10 +1,15 @@
 package dos.santos.uildson.carconnect;
 
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,13 +32,38 @@ public class ListagemActivity extends AppCompatActivity {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Carro carro = (Carro) listViewCarros.getItemAtPosition(i);
+                        Carro carroSelecionado = (Carro) listViewCarros.getItemAtPosition(i);
 
-                        Toast.makeText(getApplicationContext(), "Esse é " + carro.getNome(), Toast.LENGTH_SHORT).show();
+                        toastCarro(carroSelecionado);
                     }
                 }
         );
         popularLista();
+    }
+
+    private void toastCarro(Carro carroSelecionado) {
+
+        // Obter o Drawable da imagem do objeto Carro selecionado
+        Drawable drawable = carroSelecionado.getImage();
+
+        // Obter o nome do carro selecionado
+        String nomeCarro = carroSelecionado.getNome();
+
+        // Criar uma nova View para o Toast
+        View toastView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.toast_layout, null);
+        ImageView toastImageView = toastView.findViewById(R.id.toast_image_view);
+        TextView toastTextView = toastView.findViewById(R.id.toast_text_view);
+
+        // Definir a imagem e o nome do carro na View do Toast
+        toastImageView.setImageDrawable(drawable);
+        toastTextView.setText(nomeCarro);
+
+        // Criar e exibir o Toast
+        Toast toast = new Toast(getApplicationContext());
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(toastView);
+        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 100);
+        toast.show();
     }
 
     private void popularLista() {
