@@ -51,8 +51,10 @@ public class ListagemActivity extends AppCompatActivity {
 
         // Criar uma nova View para o Toast
         View toastView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.toast_layout, null);
-        ImageView toastImageView = toastView.findViewById(R.id.toast_image_view);
-        TextView toastTextView = toastView.findViewById(R.id.toast_text_view);
+        ImageView toastImageView = toastView.findViewById(R.id.toastImageView);
+        TextView toastTextView = toastView.findViewById(R.id.toastTextView);
+
+
 
         // Definir a imagem e o nome do carro na View do Toast
         toastImageView.setImageDrawable(drawable);

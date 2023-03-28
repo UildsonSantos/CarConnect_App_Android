@@ -88,5 +88,6 @@
     <string name="imagem_carro">Imagem de Carro</string>
     <string name="sim">Sim</string>
     <string name="nao">Nao</string>
+    <string name="image_carro">Imagem do carro</string>
 
 </resources>
