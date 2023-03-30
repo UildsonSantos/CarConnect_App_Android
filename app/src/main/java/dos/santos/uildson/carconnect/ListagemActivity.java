@@ -1,14 +1,11 @@
 package dos.santos.uildson.carconnect;
 
-import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -36,29 +33,21 @@ public class ListagemActivity extends AppCompatActivity {
 
         buttonSobre = findViewById(R.id.buttonSobre);
 
-        listViewCarros.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Carro carroSelecionado = (Carro) listViewCarros.getItemAtPosition(i);
+        listViewCarros.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Carro carroSelecionado = (Carro) listViewCarros.getItemAtPosition(i);
 
-                        toastCarro(carroSelecionado);
-                    }
-                }
-        );
+                toastCarro(carroSelecionado);
+            }
+        });
 
         listViewCarros.setOnScrollListener(new AbsListView.OnScrollListener() {
             private int lastFirstVisibleItem = 0;
             private boolean isButtonVisible = false;
 
             @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-//                if (scrollState == SCROLL_STATE_TOUCH_SCROLL) {
-//                    buttonSobre.setVisibility(View.GONE);
-//                } else {
-//                    buttonSobre.setVisibility(View.VISIBLE);
-//                }
-            }
+            public void onScrollStateChanged(AbsListView view, int scrollState) {}
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
@@ -80,16 +69,6 @@ public class ListagemActivity extends AppCompatActivity {
                     }
                 }
                 lastFirstVisibleItem = firstVisibleItem;
-
-//                if (listViewCarros.getChildAt(0) != null) {
-//                    if (listViewCarros.getFirstVisiblePosition() == 0 && listViewCarros.getChildAt(0).getTop() == 0) {
-//                        // A lista está no topo
-//                        buttonSobre.setVisibility(View.VISIBLE);
-//                    } else {
-//                        // A lista foi rolada para baixo
-//                        buttonSobre.setVisibility(View.INVISIBLE);
-//                    }
-//                }
             }
         });
 
@@ -149,12 +128,7 @@ public class ListagemActivity extends AppCompatActivity {
 
         for (int cont = 0; cont < nomes.length; cont++) {
 
-            carro = new Carro(imagens.getDrawable(cont),
-                    nomes[cont],
-                    cores[cont],
-                    carrocerias[cont],
-                    cambios[cont],
-                    motores[cont]);
+            carro = new Carro(imagens.getDrawable(cont), nomes[cont], cores[cont], carrocerias[cont], cambios[cont], motores[cont]);
 
             preco = Float.parseFloat(valores[cont]);
             carro.setValor(preco);
