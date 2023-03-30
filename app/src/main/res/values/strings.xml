@@ -89,5 +89,10 @@
     <string name="sim">Sim</string>
     <string name="nao">Nao</string>
     <string name="image_carro">Imagem do carro</string>
-
+    <string name="nome_do_autor">Uildson Santos dos Santos</string>
+    <string name="descricao_app">Imagine ter uma conexão mágica e instantânea com o coração do seu carro, um vínculo que vai além da simples condução. O CarConnect é a chave para desbloquear todo o potencial do seu veículo, permitindo que você o gerencie e controle de maneiras que nunca pensou serem possíveis.</string>
+    <string name="email_autor">dos.santos.uildson@gmail.com</string>
+    <string name="curso_autor">Engenharia de Computação</string>
+    <string name="logo_da_utfpr">Logo da UTFPR</string>
+    <string name="sobre">Sobre</string>
 </resources>

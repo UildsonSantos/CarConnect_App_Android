@@ -12,16 +12,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CarConnect"
         tools:targetApi="31">
-       
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
-            
+            android:name=".AutoriaDoApp"
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-         <activity
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ListagemActivity"
             android:exported="true">
             <intent-filter>

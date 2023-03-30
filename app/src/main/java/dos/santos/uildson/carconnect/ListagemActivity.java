@@ -1,12 +1,17 @@
 package dos.santos.uildson.carconnect;
 
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,6 +25,7 @@ public class ListagemActivity extends AppCompatActivity {
 
     private ListView listViewCarros;
     private ArrayList<Carro> carros;
+    private Button buttonSobre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +33,8 @@ public class ListagemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_listagem);
 
         listViewCarros = findViewById(R.id.listViewCarros);
+
+        buttonSobre = findViewById(R.id.buttonSobre);
 
         listViewCarros.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
@@ -38,6 +46,53 @@ public class ListagemActivity extends AppCompatActivity {
                     }
                 }
         );
+
+        listViewCarros.setOnScrollListener(new AbsListView.OnScrollListener() {
+            private int lastFirstVisibleItem = 0;
+            private boolean isButtonVisible = false;
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+//                if (scrollState == SCROLL_STATE_TOUCH_SCROLL) {
+//                    buttonSobre.setVisibility(View.GONE);
+//                } else {
+//                    buttonSobre.setVisibility(View.VISIBLE);
+//                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+                // Verifica a direção do scroll
+                if (lastFirstVisibleItem < firstVisibleItem) {
+                    // Scroll para baixo
+                    if (isButtonVisible) {
+                        // Esconde o botão
+                        buttonSobre.setVisibility(View.INVISIBLE);
+                        isButtonVisible = false;
+                    }
+                } else if (lastFirstVisibleItem > firstVisibleItem) {
+                    // Scroll para cima
+                    if (!isButtonVisible) {
+                        // Mostra o botão
+                        buttonSobre.setVisibility(View.VISIBLE);
+                        isButtonVisible = true;
+                    }
+                }
+                lastFirstVisibleItem = firstVisibleItem;
+
+//                if (listViewCarros.getChildAt(0) != null) {
+//                    if (listViewCarros.getFirstVisiblePosition() == 0 && listViewCarros.getChildAt(0).getTop() == 0) {
+//                        // A lista está no topo
+//                        buttonSobre.setVisibility(View.VISIBLE);
+//                    } else {
+//                        // A lista foi rolada para baixo
+//                        buttonSobre.setVisibility(View.INVISIBLE);
+//                    }
+//                }
+            }
+        });
+
         popularLista();
     }
 
@@ -53,7 +108,6 @@ public class ListagemActivity extends AppCompatActivity {
         View toastView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.toast_layout, null);
         ImageView toastImageView = toastView.findViewById(R.id.toastImageView);
         TextView toastTextView = toastView.findViewById(R.id.toastTextView);
-
 
 
         // Definir a imagem e o nome do carro na View do Toast
@@ -134,5 +188,9 @@ public class ListagemActivity extends AppCompatActivity {
         }
         CarrosAdapter carrosAdapter = new CarrosAdapter(this, carros);
         listViewCarros.setAdapter(carrosAdapter);
+    }
+
+    public void sobre(View view) {
+        AutoriaDoApp.sobre(this);
     }
 }
