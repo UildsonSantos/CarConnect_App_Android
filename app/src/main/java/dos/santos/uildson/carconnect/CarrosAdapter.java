@@ -21,19 +21,20 @@ public class CarrosAdapter extends BaseAdapter {
     private static class CarroHolder {
         public ImageView imageView;
         public TextView textViewNomeCarro;
-        public TextView textViewAceleracaoItem;
-        public TextView textViewVelocidadeItem;
-        public TextView textViewArCondicionadoItem;
-        public TextView textViewCombustivelItem;
-        public TextView textViewBlindadoItem;
         public TextView textViewPrecoItem;
+        public TextView textViewCombustivelItem;
+        public TextView textViewArCondicionadoItem;
+        public TextView textViewBlindadoItem;
         public TextView textViewPortasItem;
-        public TextView textViewKmItem;
-        public TextView textViewCorItem;
-        public TextView textViewAnoItem;
         public TextView textViewCarroceriaItem;
-        public TextView textViewCambioItem;
-        public TextView textViewMotor;
+//        public TextView textViewAnoItem;
+//        public TextView textViewCorItem;
+//        public TextView textViewKmItem;
+//        public TextView textViewCambioItem;
+//        public TextView textViewAceleracaoItem;
+//        public TextView textViewVelocidadeItem;
+//        public TextView textViewMotor;
+
     }
 
     public CarrosAdapter(Context context, List<Carro> carros) {
@@ -70,19 +71,19 @@ public class CarrosAdapter extends BaseAdapter {
 
             holder.imageView = view.findViewById(R.id.imageView);
             holder.textViewNomeCarro = view.findViewById(R.id.textViewNomeCarro);
-            holder.textViewAceleracaoItem = view.findViewById(R.id.textViewAceleracaoItem);
-            holder.textViewVelocidadeItem = view.findViewById(R.id.textViewVelocidadeItem);
             holder.textViewArCondicionadoItem = view.findViewById(R.id.textViewArCondicionadoItem);
             holder.textViewCombustivelItem = view.findViewById(R.id.textViewCombustivelItem);
             holder.textViewBlindadoItem = view.findViewById(R.id.textViewBlindadoItem);
             holder.textViewPrecoItem = view.findViewById(R.id.textViewPrecoItem);
             holder.textViewPortasItem = view.findViewById(R.id.textViewPortasItem);
-            holder.textViewKmItem = view.findViewById(R.id.textViewKmItem);
-            holder.textViewCorItem = view.findViewById(R.id.textViewCorItem);
-            holder.textViewAnoItem = view.findViewById(R.id.textViewAnoItem);
             holder.textViewCarroceriaItem = view.findViewById(R.id.textViewCarroceriaItem);
-            holder.textViewCambioItem = view.findViewById(R.id.textViewCambioItem);
-            holder.textViewMotor = view.findViewById(R.id.textViewMotor);
+//            holder.textViewAceleracaoItem = view.findViewById(R.id.textViewAceleracaoItem);
+//            holder.textViewVelocidadeItem = view.findViewById(R.id.textViewVelocidadeItem);
+//            holder.textViewKmItem = view.findViewById(R.id.textViewKmItem);
+//            holder.textViewCorItem = view.findViewById(R.id.textViewCorItem);
+//            holder.textViewAnoItem = view.findViewById(R.id.textViewAnoItem);
+//            holder.textViewCambioItem = view.findViewById(R.id.textViewCambioItem);
+//            holder.textViewMotor = view.findViewById(R.id.textViewMotor);
 
             view.setTag(holder);
         } else {
@@ -92,11 +93,11 @@ public class CarrosAdapter extends BaseAdapter {
         holder.imageView.setImageDrawable(carros.get(i).getImage());
         holder.textViewNomeCarro.setText(carros.get(i).getNome());
 
-        String aceleração = Float.toString(carros.get(i).getAceleracao());
-        holder.textViewAceleracaoItem.setText(aceleração);
-
-        String strVel = Integer.toString(carros.get(i).getVelocidade_max());
-        holder.textViewVelocidadeItem.setText(strVel);
+//        String aceleração = Float.toString(carros.get(i).getAceleracao());
+//        holder.textViewAceleracaoItem.setText(aceleração);
+//
+//        String strVel = Integer.toString(carros.get(i).getVelocidade_max());
+//        holder.textViewVelocidadeItem.setText(strVel);
 
         if (carros.get(i).isAr_condicionado()) {
             holder.textViewArCondicionadoItem.setText(context.getResources().getString(R.string.sim));
@@ -119,7 +120,7 @@ public class CarrosAdapter extends BaseAdapter {
                 break;
         }
 
-        if (carros.get(i).isAr_condicionado()) {
+        if (carros.get(i).isBlindagem()) {
             holder.textViewBlindadoItem.setText(context.getResources().getString(R.string.sim));
         } else {
             holder.textViewBlindadoItem.setText(context.getResources().getString(R.string.nao));
@@ -131,15 +132,15 @@ public class CarrosAdapter extends BaseAdapter {
 
         String strPort = Integer.toString(carros.get(i).getPortas());
         holder.textViewPortasItem.setText(strPort);
-
-        holder.textViewKmItem.setText(Float.toString(carros.get(i).getKm()));
-        holder.textViewCorItem.setText(carros.get(i).getCor());
-
-        String strAno = Integer.toString(carros.get(i).getAno());
-        holder.textViewAnoItem.setText(strAno);
         holder.textViewCarroceriaItem.setText(carros.get(i).getCarroceria());
-        holder.textViewCambioItem.setText(carros.get(i).getCambio());
-        holder.textViewMotor.setText(carros.get(i).getMotor());
+
+//        holder.textViewKmItem.setText(Float.toString(carros.get(i).getKm()));
+//        holder.textViewCorItem.setText(carros.get(i).getCor());
+//
+//        String strAno = Integer.toString(carros.get(i).getAno());
+//        holder.textViewAnoItem.setText(strAno);
+//        holder.textViewCambioItem.setText(carros.get(i).getCambio());
+//        holder.textViewMotor.setText(carros.get(i).getMotor());
 
         return view;
     }

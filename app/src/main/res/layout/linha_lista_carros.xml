@@ -8,99 +8,101 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="315dp"
         android:contentDescription="@string/imagem_carro"
+        android:foregroundGravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/audi_r8_v10_performance_amarelo_2022" />
 
+    <!--    <TextView-->
+    <!--        android:id="@+id/textView2"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="16dp"-->
+    <!--        android:layout_marginLeft="16dp"-->
+    <!--        android:layout_marginTop="32dp"-->
+    <!--        android:text="@string/aceleracao"-->
+    <!--        android:textSize="20sp"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/textViewNomeCarro" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/textViewAceleracaoItem"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="19dp"-->
+    <!--        android:layout_marginStart="8dp"-->
+    <!--        android:layout_marginLeft="8dp"-->
+    <!--        android:text="3.2"-->
+    <!--        app:layout_constraintBaseline_toBaselineOf="@+id/textView2"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/textView2" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/textView4"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="16dp"-->
+    <!--        android:layout_marginLeft="16dp"-->
+    <!--        android:layout_marginTop="8dp"-->
+    <!--        android:layout_marginEnd="8dp"-->
+    <!--        android:layout_marginRight="8dp"-->
+    <!--        android:text="@string/velocidade_max"-->
+    <!--        android:textSize="20sp"-->
+    <!--        app:layout_constraintEnd_toStartOf="@+id/textViewVelocidadeItem"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/textView2" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/textView6"-->
+    <!--        android:layout_width="81dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="16dp"-->
+    <!--        android:layout_marginLeft="16dp"-->
+    <!--        android:layout_marginTop="8dp"-->
+    <!--        android:text="@string/cambio"-->
+    <!--        android:textSize="20sp"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/textView8" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/textView24"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="16dp"-->
+    <!--        android:layout_marginLeft="16dp"-->
+    <!--        android:layout_marginTop="8dp"-->
+    <!--        android:text="@string/cor"-->
+    <!--        android:textSize="20sp"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/textView15" />-->
+
     <TextView
         android:id="@+id/textViewNomeCarro"
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:gravity="center"
         android:paddingBottom="4dp"
         android:text="LAND ROVER RANGE ROVER VOGUE 3.0 TDV6"
+        android:textAllCaps="true"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/aceleracao"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewNomeCarro" />
-
-    <TextView
-        android:id="@+id/textViewAceleracaoItem"
-        android:layout_width="wrap_content"
-        android:layout_height="19dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:text="3.2"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
-        app:layout_constraintStart_toEndOf="@+id/textView2" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="@string/velocidade_max"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/textViewVelocidadeItem"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="81dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:text="@string/cambio"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textViewCambioItem" />
-
-    <TextView
-        android:id="@+id/textView24"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/cor"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15" />
-
-    <TextView
-
         android:id="@+id/textView21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
         android:layout_marginTop="8dp"
         android:text="@string/ar_condicionado"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView19" />
+        app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
     <TextView
         android:id="@+id/textViewArCondicionadoItem"
@@ -123,12 +125,11 @@
         app:layout_constraintStart_toEndOf="@+id/textView15" />
 
     <TextView
-
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
         android:layout_marginTop="8dp"
         android:hint="@string/gasolina"
         android:text="@string/combustivel"
@@ -137,17 +138,16 @@
         app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
     <TextView
-
         android:id="@+id/textView19"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
         android:layout_marginTop="8dp"
         android:text="@string/blindado"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
     <TextView
         android:id="@+id/textViewBlindadoItem"
@@ -170,17 +170,16 @@
         app:layout_constraintStart_toEndOf="@+id/textView17" />
 
     <TextView
-
         android:id="@+id/textView23"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
         android:layout_marginTop="8dp"
         android:text="@string/portas"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
     <TextView
         android:id="@+id/textViewPortasItem"
@@ -192,140 +191,137 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/textView23"
         app:layout_constraintStart_toEndOf="@+id/textView23" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/motor"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView25" />
+    <!--    <TextView-->
+    <!--        android:id="@+id/textView5"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="16dp"-->
+    <!--        android:layout_marginLeft="16dp"-->
+    <!--        android:layout_marginTop="8dp"-->
+    <!--        android:text="@string/motor"-->
+    <!--        android:textSize="20sp"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/textView25" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/textViewMotor"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="4dp"-->
+    <!--        android:layout_marginLeft="4dp"-->
+    <!--        android:text="4.0 V8 Bi-turbo de 639 cv"-->
+    <!--        app:layout_constraintBaseline_toBaselineOf="@+id/textView5"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/textView5" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/textViewKmItem"-->
+    <!--        android:layout_width="74dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="4dp"-->
+    <!--        android:layout_marginLeft="4dp"-->
+    <!--        android:text="934784849"-->
+    <!--        app:layout_constraintBaseline_toBaselineOf="@+id/textView25"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/textView25" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/textViewCorItem"-->
+    <!--        android:layout_width="157dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="4dp"-->
+    <!--        android:layout_marginLeft="4dp"-->
+    <!--        android:text="Vermelho Rosso Corsa"-->
+    <!--        app:layout_constraintBaseline_toBaselineOf="@+id/textView24"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/textView24" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/textView25"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="16dp"-->
+    <!--        android:layout_marginLeft="16dp"-->
+    <!--        android:layout_marginTop="8dp"-->
+    <!--        android:text="@string/km"-->
+    <!--        android:textSize="20sp"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/textView24" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/textView8"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="16dp"-->
+    <!--        android:layout_marginLeft="16dp"-->
+    <!--        android:layout_marginTop="8dp"-->
+    <!--        android:text="@string/ano"-->
+    <!--        android:textSize="20sp"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/textView21" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/textViewAnoItem"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="4dp"-->
+    <!--        android:layout_marginLeft="4dp"-->
+    <!--        android:gravity="center"-->
+    <!--        android:text="1998"-->
+    <!--        app:layout_constraintBaseline_toBaselineOf="@+id/textView8"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/textView8" />-->
 
     <TextView
-        android:id="@+id/textViewMotor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:text="4.0 V8 Bi-turbo de 639 cv"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView5"
-        app:layout_constraintStart_toEndOf="@+id/textView5" />
-
-    <TextView
-        android:id="@+id/textViewKmItem"
-        android:layout_width="74dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:text="934784849"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView25"
-        app:layout_constraintStart_toEndOf="@+id/textView25" />
-
-    <TextView
-        android:id="@+id/textViewCorItem"
-        android:layout_width="157dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:text="Vermelho Rosso Corsa"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView24"
-        app:layout_constraintStart_toEndOf="@+id/textView24" />
-
-    <TextView
-        android:id="@+id/textView25"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/km"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView24" />
-
-    <TextView
-
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/ano"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView21" />
-
-    <TextView
-        android:id="@+id/textViewAnoItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:gravity="center"
-        android:text="1998"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView8"
-        app:layout_constraintStart_toEndOf="@+id/textView8" />
-
-    <TextView
-
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/carroceria"
         android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
     <TextView
         android:id="@+id/textViewCarroceriaItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
         android:text="Coupe Super Esportivo"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView10"
         app:layout_constraintStart_toEndOf="@+id/textView10" />
 
     <TextView
-
         android:id="@+id/textView17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="50dp"
         android:text="@string/preco"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewNomeCarro" />
 
-    <TextView
+    <!--    <TextView-->
+    <!--        android:id="@+id/textViewCambioItem"-->
+    <!--        android:layout_width="314dp"-->
+    <!--        android:layout_height="37dp"-->
+    <!--        android:layout_marginStart="4dp"-->
+    <!--        android:layout_marginLeft="4dp"-->
+    <!--        android:text="Câmbio AMG SPEEDSHIFT MCT Transmissão esportiva de 9 velocidades"-->
+    <!--        app:layout_constraintBaseline_toBaselineOf="@+id/textView6"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/textView6" />-->
 
-        android:id="@+id/textViewCambioItem"
-        android:layout_width="314dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="8dp"
-        android:text="Câmbio AMG SPEEDSHIFT MCT Transmissão esportiva de 9 velocidades"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAnoItem" />
-
-    <TextView
-        android:id="@+id/textViewVelocidadeItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:text="300"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView4"
-        app:layout_constraintStart_toEndOf="@+id/textView4" />
+    <!--    <TextView-->
+    <!--        android:id="@+id/textViewVelocidadeItem"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="4dp"-->
+    <!--        android:layout_marginLeft="4dp"-->
+    <!--        android:text="300"-->
+    <!--        app:layout_constraintBaseline_toBaselineOf="@+id/textView4"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/textView4" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,4 +14,7 @@
 
     <color name="snow">#FFFFFFFF</color>
     <color name="white">#4DFFFFFF</color>
+
+    <color name="textInputLayoutBoxStrokeColor">#FF5722</color>
+    <color name="textInputLayoutBoxBackgroundColor">@color/white</color>
 </resources>

@@ -19,14 +19,17 @@ public class Carro {
     private int velocidade_max;
     private String motor;
 
+    public Carro(String nome, String carroceria) {
+        this.nome = nome;
+        this.carroceria = carroceria;
+    }
+
     public Carro(
-            Drawable image,
             String nome,
             String cor,
             String carroceria,
             String cambio,
             String motor) {
-        this.image = image;
         this.nome = nome;
         this.cor = cor;
         this.carroceria = carroceria;

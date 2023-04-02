@@ -2,7 +2,7 @@
     <string name="app_name">Car Connect</string>
 
     <string name="alcool">Álcool</string>
-    <string name="combustivel">Combustivel:</string>
+    <string name="combustivel">Combustivel</string>
     <string name="diesel">Diesel</string>
     <string name="eletrico">Elétrico</string>
     <string name="flex">Flex</string>
@@ -20,41 +20,42 @@
     <string name="suv">SUV</string>
     <string name="wagon">Wagon</string>
 
-    <string name="ar_condicionado">Ar Condicionado:</string>
+    <string name="ar_condicionado">Ar Condicionado</string>
     <string name="ano_do_carro">Ano de fabricação</string>
     <string name="automatico">Direção assisitida</string>
-    <string name="ano">Ano Modelo:</string>
-    <string name="blindado">Blindado:</string>
+    <string name="ano">Ano Modelo</string>
+    <string name="blindado">Blindado</string>
     <string name="cadastro">Cadastro</string>
-    <string name="carroceria">Carroceria:</string>
+    <string name="carroceria">Carroceria</string>
     <string name="cor_do_carro">Cor do carro</string>
-    <string name="cor">Cor:</string>
+    <string name="cor">Cor</string>
     <string name="clean_form">Formulário Limpo</string>
     <string name="campo_invalido">Campo inválido</string>
-    <string name="combustivel_invalido">Combustivel inválido</string>
+    <string name="combustivel_invalido">Por favor, selecione uma opção de combustivel</string>
     <string name="carroceria_invalida">Carroceria inválida</string>
     <string name="dados_salvos">Dados salvo com sucesso!</string>
     <string name="duas_portas">2 Portas</string>
     <string name="eletrica">Elétrica</string>
     <string name="eletro_hidraulica">Eletro-hidráulica</string>
     <string name="hidraulica">Hidráulica</string>
-    <string name="itens_opcionais">Itens Opcionais:</string>
+    <string name="itens_opcionais">Itens Opcionais</string>
     <string name="limpar">Limpar</string>
     <string name="mecanica">Mecânica</string>
     <string name="nome_do_carro">Nome do carro</string>
-    <string name="nome">Nome:</string>
-    <string name="opcoes">Opçoes:</string>
-    <string name="portas">Portas Passageiros:</string>
+    <string name="nome">Nome</string>
+    <string name="opcoes">Opçoes</string>
+    <string name="portas">Portas Passageiros</string>
     <string name="valor">Valor do carro</string>
     <string name="portas_invalida">Portas inválida</string>
     <string name="quatro_portas">4 Portas</string>
     <string name="salvar">Salvar</string>
     <string name="tipo">Tipo</string>
-    <string name="preco">Preço:</string>
-    <string name="velocidade_max">Velocidade Max. (km/h):</string>
-    <string name="aceleracao">Aceleração 0 a 100 (km/h):</string>
-    <string name="motor">Motor:</string>
-    <string name="cambio">Câmbio:</string>
+    <string name="preco">Preço</string>
+    <string name="velocidade_max">Velocidade Max. (km/h)</string>
+    <string name="aceleracao">Aceleração 0 a 100 (km/h)</string>
+    <string name="motor">Motor</string>
+    <string name="cambio">Câmbio</string>
+    <string name="add_carro">Adicionar Carro</string>
 
     <string name="amarelo">Amarelo</string>
     <string name="azul">Azul</string>
@@ -84,7 +85,8 @@
     <string name="meredes_benz_e300_exclusive_preta_2021">MERCEDES-BENZ E 300 EXCLUSIVE</string>
     <string name="mclaren_620r_preta_2020">MCLAREN 620R</string>
     <string name="pagani_utopia">Pagani Utopia</string>
-    <string name="km">Km:</string>
+
+    <string name="km">Km</string>
     <string name="imagem_carro">Imagem de Carro</string>
     <string name="sim">Sim</string>
     <string name="nao">Nao</string>
@@ -95,4 +97,15 @@
     <string name="curso_autor">Engenharia de Computação</string>
     <string name="logo_da_utfpr">Logo da UTFPR</string>
     <string name="sobre">Sobre</string>
+    <string name="adicionar">Adicionar</string>
+    <string name="nome_invalido">Nome obrigatório</string>
+    <string name="velocidade_invalida">Erro: o valor informado não é um número válido.</string>
+    <string name="porta_nao_selecionada">Por favor, selecione Qtd. de Portas</string>
+    <string name="ano_invalido">Por favor, informe um ano válido</string>
+    <string name="preco_invalido">Preço inválido</string>
+    <string name="km_invalido">Kilometragem inválida</string>
+    <string name="aceleracao_invalida">Aceleração inválido</string>
+    <string name="permissao_negada">A permissão de acesso à galeria é necessária</string>
+    <string name="permissao_negada_novamente">A permissão de acesso à galeria é necessária para continuar</string>
+    <string name="selecione_imagem">Selecione uma imagem do carro</string>
 </resources>

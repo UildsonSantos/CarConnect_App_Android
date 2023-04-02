@@ -1,6 +1,8 @@
 package dos.santos.uildson.carconnect;
 
-public enum Combustivel {
+import java.io.Serializable;
+
+public enum Combustivel implements Serializable {
     Alcool,
     Gasolina,
     Diesel,
