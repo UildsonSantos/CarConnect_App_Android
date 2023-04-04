@@ -136,25 +136,14 @@ public class ListagemActivity extends AppCompatActivity {
         int[] ar_condicionados = getResources().getIntArray(R.array.ar_condicionado);
         String[] carrocerias = getResources().getStringArray(R.array.carroceria);
 
-//        int[] ano = getResources().getIntArray(R.array.ano);
-//        String[] cores = getResources().getStringArray(R.array.cor);
-//        String[] cambios = getResources().getStringArray(R.array.cambio);
-//        String[] kilometragens = getResources().getStringArray(R.array.km);
-//        String[] aceleracoes = getResources().getStringArray(R.array.aceleracao);
-//        int[] velocidades_max = getResources().getIntArray(R.array.velocidade_max);
-//        String[] motores = getResources().getStringArray(R.array.motor);
-
         carros = new ArrayList<>();
 
         Carro carro;
-        float preco, km, acele;
+        float preco;
 
         Combustivel[] combustiveis = Combustivel.values();
 
         for (int cont = 0; cont < nomes.length; cont++) {
-
-//            carro = new Carro(nomes[cont], cores[cont],
-//                    carrocerias[cont], cambios[cont], motores[cont]);
 
             carro = new Carro(nomes[cont], carrocerias[cont]);
 
@@ -163,31 +152,12 @@ public class ListagemActivity extends AppCompatActivity {
             preco = Float.parseFloat(valores[cont]);
             carro.setValor(preco);
 
-//            km = Float.parseFloat(kilometragens[cont]);
-//            carro.setKm(km);
-
-//            acele = Float.parseFloat(aceleracoes[cont]);
-//            carro.setAceleracao(acele);
-
             carro.setCombustivel(combustiveis[combustiveis_pos[cont]]);
 
             carro.setPortas(portas[cont]);
-//            carro.setAno(ano[cont]);
-//            carro.setVelocidade_max(velocidades_max[cont]);
 
-            if (blindagens[cont] == 0) {
-                carro.setBlindagem(false);
-            } else {
-                carro.setBlindagem(true);
-
-            }
-            if (ar_condicionados[cont] == 0) {
-                carro.setAr_condicionado(false);
-            } else {
-                carro.setAr_condicionado(true);
-
-            }
-
+            carro.setBlindagem(blindagens[cont] != 0);
+            carro.setAr_condicionado(ar_condicionados[cont] != 0);
             carros.add(carro);
         }
         CarrosAdapter carrosAdapter = new CarrosAdapter(this, carros);
@@ -214,16 +184,6 @@ public class ListagemActivity extends AppCompatActivity {
             byte[] byteArray = bundle.getByteArray(CadastroActivity.IMAGEM);
             Drawable imagem = new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length));
 
-//            String cor = bundle.getString(CadastroActivity.COR);
-//            String cambio = bundle.getString(CadastroActivity.CAMBIO);
-//            String motor = bundle.getString(CadastroActivity.MOTOR);
-//
-//            int ano = bundle.getInt(CadastroActivity.ANO);
-//            int velocidade_max = bundle.getInt(CadastroActivity.VELOCIDADE_MAX);
-//            float aceleracao = bundle.getFloat(CadastroActivity.ACELERACAO);
-//            float km = bundle.getFloat(CadastroActivity.KM);
-
-
             if (requestCode == CadastroActivity.ALTERAR) {
                 // TODO: implementar update
             } else {
@@ -236,10 +196,6 @@ public class ListagemActivity extends AppCompatActivity {
                 newCarItem.setCombustivel(combustivel);
                 newCarItem.setValor(valor);
                 carros.add(newCarItem);
-//                newCarItem.setVelocidade_max(velocidade_max);
-//                newCarItem.setAno(ano);
-//                newCarItem.setAceleracao(aceleracao);
-//                newCarItem.setKm(km);
             }
             carrosAdapter.notifyDataSetChanged();
         }
