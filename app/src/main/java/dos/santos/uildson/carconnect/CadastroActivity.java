@@ -5,11 +5,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -23,6 +26,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -51,7 +55,7 @@ public class CadastroActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_PERMISSION_READ_EXTERNAL_STORAGE = 5;
 
 
-    private TextInputEditText texInputEditTextNome,texInputEditTextValor;
+    private TextInputEditText texInputEditTextNome, texInputEditTextValor;
 
     private CheckBox checkBoxAlcool,
             checkBoxGasolina,
@@ -94,6 +98,55 @@ public class CadastroActivity extends AppCompatActivity {
         activity.startActivityForResult(intent, NOVO);
     }
 
+    public static void update(AppCompatActivity activity, Carro update) {
+
+        Intent intent = new Intent(activity, CadastroActivity.class);
+
+        intent.putExtra(MODO, ALTERAR);
+
+        byte[] byteArray = getBytes((BitmapDrawable) update.getImage());
+        intent.putExtra(IMAGEM, byteArray);
+
+        intent.putExtra(NOME, update.getNome());
+        intent.putExtra(VALOR, update.getValor());
+        intent.putExtra(CARROCERIA, update.getCarroceria());
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(COMBUSTIVEL, update.getCombustivel());
+        intent.putExtras(bundle);
+
+        intent.putExtra(PORTAS, update.getPortas());
+        intent.putExtra(BLINDAGEM, update.isBlindagem());
+        intent.putExtra(AR_CONDICIONADO, update.isAr_condicionado());
+
+        activity.startActivityForResult(intent, ALTERAR);
+    }
+
+    // cria o menu de opções determinado pelo layout
+    @Override
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+        getMenuInflater().inflate(R.menu.cadastro_opcoes, menu);
+        return true;
+    }
+
+    // quando um menuItem é selecionado
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuItemSalvar:
+                salvarDados();
+                return true;
+            case R.id.menuItemLimpar:
+                limparCampos();
+                return true;
+            case android.R.id.home:
+                cancelar();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,11 +184,72 @@ public class CadastroActivity extends AppCompatActivity {
 
             if (modo == NOVO) {
                 setTitle(getString(R.string.add_carro));
+            } else {
+
+                setTitle(getString(R.string.alterar_carro));
+
+                String nome = bundle.getString(CadastroActivity.NOME);
+                texInputEditTextNome.setText(nome);
+
+                float valor = bundle.getFloat(CadastroActivity.VALOR);
+                texInputEditTextValor.setText(String.valueOf(valor));
+
+                String carroceria = bundle.getString(CadastroActivity.CARROCERIA);
+                ArrayAdapter<String> adapter = (ArrayAdapter<String>) spinnerCarroceria.getAdapter();
+                int count = adapter.getCount();
+                for (int i = 0; i < count; i++) {
+                    String item = adapter.getItem(i);
+                    if (item.equals(carroceria)) {
+                        spinnerCarroceria.setSelection(i);
+                        break;
+                    }
+                }
+
+
+                int portas = bundle.getInt(CadastroActivity.PORTAS);
+
+                if (portas == 2) {
+                    radioGroupPortas.check(R.id.radioButton2Portas);
+                } else {
+                    radioGroupPortas.check(R.id.radioButton4Portas);
+                }
+
+                boolean blindagem = bundle.getBoolean(CadastroActivity.BLINDAGEM);
+                checkBoxBlindado.setChecked(blindagem);
+                boolean ar_condicionado = bundle.getBoolean(CadastroActivity.AR_CONDICIONADO);
+                checkBoxArCondicionado.setChecked(ar_condicionado);
+
+
+                Combustivel combustivel = (Combustivel) bundle.getSerializable(CadastroActivity.COMBUSTIVEL);
+                switch (combustivel) {
+                    case Alcool:
+                        checkBoxAlcool.setChecked(true);
+                        break;
+                    case Gasolina:
+                        checkBoxGasolina.setChecked(true);
+                        break;
+                    case Diesel:
+                        checkBoxDiesel.setChecked(true);
+                        break;
+                    case Eletrico:
+                        checkBoxEletrico.setChecked(true);
+                        break;
+                }
+
+                byte[] byteArray = bundle.getByteArray(CadastroActivity.IMAGEM);
+                Drawable imagem = new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length));
+                imageViewCarro.setImageDrawable(imagem);
             }
         }
         texInputEditTextNome.requestFocus();
 
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
     }
+
 
     @SuppressWarnings("deprecation")
     private void openGallery() {
@@ -164,7 +278,7 @@ public class CadastroActivity extends AppCompatActivity {
         spinnerCarroceria.setAdapter(adapter);
     }
 
-    public void limparCampos(View view) {
+    public void limparCampos() {
         texInputEditTextNome.setText(null);
         texInputEditTextValor.setText(null);
 
@@ -183,7 +297,7 @@ public class CadastroActivity extends AppCompatActivity {
         Toast.makeText(this, R.string.clean_form, Toast.LENGTH_LONG).show();
     }
 
-    public void salvarDados(View view) {
+    public void salvarDados() {
 
         Drawable imagemCarro = imageViewCarro.getDrawable();
 
@@ -239,12 +353,7 @@ public class CadastroActivity extends AppCompatActivity {
         addCarro.setBlindagem(checkBoxBlindado.isChecked());
 
         // Converter a imagem em um array de bytes
-        Bitmap bitmap = ((BitmapDrawable) imagemCarro).getBitmap();
-
-        Bitmap resizedImage = resizeImage(bitmap, 512, 512);
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        resizedImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
+        byte[] byteArray = getBytes((BitmapDrawable) imagemCarro);
 
 
         Intent intent = new Intent();
@@ -268,6 +377,21 @@ public class CadastroActivity extends AppCompatActivity {
         setResult(Activity.RESULT_OK, intent);
         finish();
 
+    }
+
+    @NonNull
+    private static byte[] getBytes(BitmapDrawable imagemCarro) {
+        Bitmap bitmap = imagemCarro.getBitmap();
+
+        Bitmap resizedImage = resizeImage(bitmap, 512, 512);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        resizedImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
+    }
+
+    public void cancelar() {
+        onBackPressed();
     }
 
     @Override
@@ -302,7 +426,7 @@ public class CadastroActivity extends AppCompatActivity {
         }
     }
 
-    public Bitmap resizeImage(Bitmap image, int maxWidth, int maxHeight) {
+    public static Bitmap resizeImage(Bitmap image, int maxWidth, int maxHeight) {
         if (maxWidth > 0 && maxHeight > 0 && image != null) {
             int width = image.getWidth();
             int height = image.getHeight();
@@ -323,4 +447,6 @@ public class CadastroActivity extends AppCompatActivity {
             return null;
         }
     }
+
+
 }

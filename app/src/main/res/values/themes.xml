@@ -9,12 +9,13 @@
         <item name="colorSecondary">@color/slate_gray</item>
         <item name="colorSecondaryVariant">@color/steel_blue</item>
         <item name="colorOnSecondary">@color/snow</item>
+        <item name="android:textColorSecondary">@color/pumpkin</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="21">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="textInputStyle">@style/AppTheme.TextInputLayout</item>
         <item name="colorControlNormal">@color/textInputLayoutBoxBackgroundColor</item>
         <item name="colorControlActivated">@color/textInputLayoutBoxStrokeColor</item>
+
     </style>
     <style name="AppTheme.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <!-- Adicione as propriedades que você deseja personalizar, como a cor de fundo e a cor do contorno. Por exemplo: -->

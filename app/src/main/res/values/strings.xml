@@ -44,6 +44,8 @@
     <string name="limpar">Limpar</string>
     <string name="salvar">Salvar</string>
     <string name="adicionar">Adicionar</string>
+    <string name="editar">Editar</string>
+    <string name="excluir">Excluir</string>
 
     <string name="nome_do_carro">Nome do carro</string>
     <string name="quatro_portas">4 Portas</string>
@@ -92,4 +94,5 @@
     <string name="curso_autor">Engenharia de Computação</string>
     <string name="logo_da_utfpr">Logo da UTFPR</string>
     <string name="sobre">Sobre</string>
+    <string name="alterar_carro">Alterar Valores</string>
 </resources>

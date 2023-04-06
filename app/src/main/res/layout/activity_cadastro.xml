@@ -14,21 +14,6 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp">
 
-        <TextView
-            android:id="@+id/textViewCadastro"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="47dp"
-            android:layout_marginLeft="47dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="250dp"
-            android:layout_marginRight="250dp"
-            android:text="@string/cadastro"
-            android:textSize="34sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
 
         <TextView
             android:id="@+id/textViewCarroceriaItem"
@@ -114,24 +99,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkBoxAlcool" />
 
-        <Button
-            android:id="@+id/buttonSalvar"
-            android:layout_width="91dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginTop="60dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginRight="32dp"
-            android:layout_marginBottom="24dp"
-            android:onClick="salvarDados"
-            android:text="@string/salvar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/buttonLimpar"
-            app:layout_constraintTop_toBottomOf="@+id/checkBoxArCondicionado"
-            tools:ignore="TextContrastCheck" />
-
         <RadioGroup
             android:id="@+id/radioGroupPortas"
             android:layout_width="wrap_content"
@@ -167,21 +134,6 @@
             android:text="@string/itens_opcionais"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/radioGroupPortas" />
-
-        <Button
-            android:id="@+id/buttonLimpar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="187dp"
-            android:layout_marginLeft="187dp"
-            android:layout_marginTop="60dp"
-            android:layout_marginBottom="24dp"
-            android:onClick="limparCampos"
-            android:text="@string/limpar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBoxArCondicionado"
-            tools:ignore="TextContrastCheck" />
 
         <CheckBox
             android:id="@+id/checkBoxArCondicionado"
@@ -256,13 +208,13 @@
             android:id="@+id/linearLayoutGaleria"
             android:layout_width="168dp"
             android:layout_height="50dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="90dp"
             android:clickable="true"
             android:gravity="center|start"
             android:onClick="onLinearLayoutClicked"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCadastro">
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/imageViewCarro"

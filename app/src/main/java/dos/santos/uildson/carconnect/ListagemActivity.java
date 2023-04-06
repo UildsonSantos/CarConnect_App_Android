@@ -4,21 +4,25 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ActionMode;
 
 import java.util.ArrayList;
 
@@ -30,9 +34,59 @@ public class ListagemActivity extends AppCompatActivity {
     private ListView listViewCarros;
     private ArrayList<Carro> carros = new ArrayList<>();
     CarrosAdapter carrosAdapter;
-    private Button buttonSobre, buttonAdicionar;
 
+
+    private ActionMode actionMode;
     private int posicaoSelecionada = -1;
+    private View viewSelecionada;
+
+    private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+
+            MenuInflater inflate = mode.getMenuInflater();
+            inflate.inflate(R.menu.listagem_item_selecionado, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+
+            switch (item.getItemId()) {
+                case R.id.menuItemEditar:
+                    update();
+                    mode.finish();
+                    return true;
+
+                case R.id.menuItemExcluir:
+                    excluir();
+                    mode.finish();
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+
+            if (viewSelecionada != null) {
+                viewSelecionada.setBackgroundColor(Color.TRANSPARENT);
+            }
+
+            actionMode = null;
+            viewSelecionada = null;
+
+            listViewCarros.setEnabled(true);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +95,6 @@ public class ListagemActivity extends AppCompatActivity {
 
         listViewCarros = findViewById(R.id.listViewCarros);
 
-        buttonSobre = findViewById(R.id.buttonSobre);
-        buttonAdicionar = findViewById(R.id.buttonAdicionar);
 
         listViewCarros.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -52,47 +104,54 @@ public class ListagemActivity extends AppCompatActivity {
                 toastCarro(carroSelecionado);
             }
         });
-
-        listViewCarros.setOnScrollListener(new AbsListView.OnScrollListener() {
-            private int lastFirstVisibleItem = 0;
-            private boolean isButtonVisible = false;
+        listViewCarros.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        listViewCarros.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-            }
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-                // Verifica a direção do scroll
-                if (lastFirstVisibleItem < firstVisibleItem) {
-                    // Scroll para baixo
-                    if (isButtonVisible) {
-                        // Esconde o botão
-                        buttonSobre.setVisibility(View.INVISIBLE);
-                        buttonAdicionar.setVisibility(View.INVISIBLE);
-                        isButtonVisible = false;
-                    }
-                } else if (lastFirstVisibleItem > firstVisibleItem) {
-                    // Scroll para cima
-                    if (!isButtonVisible) {
-                        // Mostra o botão
-                        buttonSobre.setVisibility(View.VISIBLE);
-                        buttonAdicionar.setVisibility(View.VISIBLE);
-                        isButtonVisible = true;
-                    }
+                if (actionMode != null) {
+                    return false;
                 }
-                lastFirstVisibleItem = firstVisibleItem;
+
+                posicaoSelecionada = position;
+
+                view.setBackgroundColor(Color.LTGRAY);
+
+                viewSelecionada = view;
+
+                listViewCarros.setEnabled(false);
+
+                actionMode = startSupportActionMode(mActionModeCallback);
+
+                return true;
             }
         });
-
         popularLista();
 //        popularListaAnterior();
-
     }
 
-    public void adicionarCarro(View view) {
-        CadastroActivity.novoCarro(this);
+
+    // cria o menu determinado pelo layout
+    @Override
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+        getMenuInflater().inflate(R.menu.listagem_opcoes, menu);
+        return true;
+    }
+
+    // quando um menuItem é selecionado
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuItemAdicionar:
+                CadastroActivity.novoCarro(this);
+                return true;
+            case R.id.menuItemSobre:
+                AutoriaDoApp.sobre(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void toastCarro(Carro carroSelecionado) {
@@ -164,6 +223,20 @@ public class ListagemActivity extends AppCompatActivity {
         listViewCarros.setAdapter(carrosAdapter);
     }
 
+    private void update() {
+
+        Carro update = carros.get(posicaoSelecionada);
+
+        CadastroActivity.update(this, update);
+    }
+
+    private void excluir() {
+
+        carros.remove(posicaoSelecionada);
+        carrosAdapter.notifyDataSetChanged();
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -185,23 +258,30 @@ public class ListagemActivity extends AppCompatActivity {
             Drawable imagem = new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length));
 
             if (requestCode == CadastroActivity.ALTERAR) {
-                // TODO: implementar update
+                Carro update = carros.get(posicaoSelecionada);
+
+                update.setImage(imagem);
+                update.setNome(nome);
+                update.setCarroceria(carroceria);
+                update.setCombustivel(combustivel);
+                update.setPortas(portas);
+                update.setValor(valor);
+                update.setBlindagem(blindagem);
+                update.setAr_condicionado(ar_condicionado);
+                posicaoSelecionada = -1;
             } else {
-//                Carro newCarItem = new Carro(nome, cor, carroceria, cambio, motor);
                 Carro newCarItem = new Carro(nome, carroceria);
+
                 newCarItem.setImage(imagem);
                 newCarItem.setPortas(portas);
                 newCarItem.setBlindagem(blindagem);
                 newCarItem.setAr_condicionado(ar_condicionado);
                 newCarItem.setCombustivel(combustivel);
                 newCarItem.setValor(valor);
+
                 carros.add(newCarItem);
             }
             carrosAdapter.notifyDataSetChanged();
         }
-    }
-
-    public void sobre(View view) {
-        AutoriaDoApp.sobre(this);
     }
 }
