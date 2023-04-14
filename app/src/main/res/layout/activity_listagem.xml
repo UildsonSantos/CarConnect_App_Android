@@ -5,11 +5,13 @@
     android:layout_height="match_parent"
     tools:context=".ListagemActivity">
 
-    <ListView
-        android:id="@+id/listViewCarros"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewCarros"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        tools:listitem="@layout/linha_lista_carros"></ListView>
+        tools:layout_editor_absoluteX="-16dp"
+        tools:layout_editor_absoluteY="-62dp"></androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

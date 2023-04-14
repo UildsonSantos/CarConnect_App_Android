@@ -3,6 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/menuItemToggle"
+        android:icon="@drawable/ic_baseline_format_list_bulleted_24"
+        android:title="@string/toggle_view"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/menuItemAdicionar"
         android:icon="@drawable/ic_baseline_add_circle_24"
         android:title="@string/adicionar"
@@ -10,4 +16,6 @@
     <item
         android:id="@+id/menuItemSobre"
         android:title="@string/sobre" />
+
+
 </menu>

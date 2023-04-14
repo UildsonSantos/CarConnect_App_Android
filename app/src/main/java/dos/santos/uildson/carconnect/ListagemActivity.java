@@ -1,7 +1,9 @@
 package dos.santos.uildson.carconnect;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -14,33 +16,37 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import dos.santos.uildson.carconnect.utils.RecyclerItemClickListener;
+
 public class ListagemActivity extends AppCompatActivity {
 
-    private static final int CADASTRO_REQUEST_CODE = 11;
-    private static final int REQUEST_CODE = 12;
+    private static final String ARQUIVO = "dos.santos.uildson.carconnect.MODO_LAYOUT";
+    static final String IS_GRID = "IS_GRID";
+    private boolean isGrid = false;
 
-    private ListView listViewCarros;
     private ArrayList<Carro> carros = new ArrayList<>();
-    CarrosAdapter carrosAdapter;
-
+    private CarrosAdapter carrosAdapter;
+    private RecyclerView recyclerViewCarros;
+    SharedPreferences shared;
 
     private ActionMode actionMode;
     private int posicaoSelecionada = -1;
     private View viewSelecionada;
 
-    private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+    private final ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
 
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
@@ -84,7 +90,7 @@ public class ListagemActivity extends AppCompatActivity {
             actionMode = null;
             viewSelecionada = null;
 
-            listViewCarros.setEnabled(true);
+//            listViewCarros.setEnabled(true);
         }
     };
 
@@ -93,56 +99,85 @@ public class ListagemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listagem);
 
-        listViewCarros = findViewById(R.id.listViewCarros);
+        recyclerViewCarros = findViewById(R.id.recyclerViewCarros);
 
+        recyclerViewCarros.addOnItemTouchListener(
 
-        listViewCarros.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Carro carroSelecionado = (Carro) listViewCarros.getItemAtPosition(i);
+                new RecyclerItemClickListener(getApplicationContext(),
+                        recyclerViewCarros,
+                        new RecyclerItemClickListener.OnItemClickListener() {
 
-                toastCarro(carroSelecionado);
-            }
-        });
-        listViewCarros.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        listViewCarros.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
 
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                                Carro carroSelecionado = carros.get(position);
+                                toastCarro(carroSelecionado);
+                            }
 
-                if (actionMode != null) {
-                    return false;
-                }
+                            @Override
+                            public void onLongItemClick(View view, int position) {
 
-                posicaoSelecionada = position;
+                                if (actionMode != null) {
+                                    return;
+                                }
 
-                view.setBackgroundColor(Color.LTGRAY);
+                                posicaoSelecionada = position;
 
-                viewSelecionada = view;
+                                view.setBackgroundColor(Color.LTGRAY);
 
-                listViewCarros.setEnabled(false);
+                                view.setBackgroundColor(Color.LTGRAY);
 
-                actionMode = startSupportActionMode(mActionModeCallback);
+                                viewSelecionada = view;
 
-                return true;
-            }
-        });
-        popularLista();
-//        popularListaAnterior();
+                                actionMode = startSupportActionMode(mActionModeCallback);
+                            }
+                        }
+                ));
+
+        lerPreferenciaLayout();
+
+        if (!shared.contains(IS_GRID)) {
+            SharedPreferences.Editor editor = shared.edit();
+            editor.putBoolean(IS_GRID, isGrid);
+            editor.apply();
+        }
+
+        popularListaAnterior();
+    }
+
+    private void lerPreferenciaLayout() {
+
+        shared = getSharedPreferences(ARQUIVO,
+                Context.MODE_PRIVATE);
+
+        isGrid = shared.getBoolean(IS_GRID, isGrid);
+
     }
 
 
-    // cria o menu determinado pelo layout
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.listagem_opcoes, menu);
+
+        MenuItem item = menu.findItem(R.id.menuItemToggle);
+
+        item.setIcon(isGrid ? R.drawable.ic_baseline_format_list_bulleted_24 : R.drawable.ic_baseline_grid_view_24);
+
         return true;
     }
 
-    // quando um menuItem é selecionado
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        SharedPreferences.Editor editor = shared.edit();
         switch (item.getItemId()) {
+            case R.id.menuItemToggle:
+                isGrid = !isGrid;
+
+                item.setIcon(isGrid ? R.drawable.ic_baseline_format_list_bulleted_24 : R.drawable.ic_baseline_grid_view_24);
+                setLayoutManager(isGrid);
+                editor.putBoolean(IS_GRID, isGrid);
+                editor.apply();
+                return true;
             case R.id.menuItemAdicionar:
                 CadastroActivity.novoCarro(this);
                 return true;
@@ -152,6 +187,19 @@ public class ListagemActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void setLayoutManager(boolean isGridView) {
+
+        RecyclerView.LayoutManager layoutManager;
+        if (isGridView) {
+            layoutManager = new GridLayoutManager(this, 2);
+        } else {
+            layoutManager = new LinearLayoutManager(this);
+        }
+        recyclerViewCarros.setLayoutManager(layoutManager);
+        carrosAdapter.setGridMode(isGridView);
+        carrosAdapter.notifyDataSetChanged();
     }
 
     private void toastCarro(Carro carroSelecionado) {
@@ -177,12 +225,6 @@ public class ListagemActivity extends AppCompatActivity {
         toast.setView(toastView);
         toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 100);
         toast.show();
-    }
-
-    private void popularLista() {
-
-        carrosAdapter = new CarrosAdapter(this, carros);
-        listViewCarros.setAdapter(carrosAdapter);
     }
 
     private void popularListaAnterior() {
@@ -219,23 +261,20 @@ public class ListagemActivity extends AppCompatActivity {
             carro.setAr_condicionado(ar_condicionados[cont] != 0);
             carros.add(carro);
         }
-        CarrosAdapter carrosAdapter = new CarrosAdapter(this, carros);
-        listViewCarros.setAdapter(carrosAdapter);
+        carrosAdapter = new CarrosAdapter(this, carros, shared);
+        recyclerViewCarros.setAdapter(carrosAdapter);
+        setLayoutManager(isGrid);
     }
 
     private void update() {
-
         Carro update = carros.get(posicaoSelecionada);
-
         CadastroActivity.update(this, update);
     }
 
     private void excluir() {
-
         carros.remove(posicaoSelecionada);
         carrosAdapter.notifyDataSetChanged();
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
