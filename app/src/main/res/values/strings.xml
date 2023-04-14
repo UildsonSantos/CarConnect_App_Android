@@ -1,73 +1,6 @@
 <resources>
     <string name="app_name">Car Connect</string>
 
-    <string name="alcool">Álcool</string>
-    <string name="combustivel">Combustivel</string>
-    <string name="diesel">Diesel</string>
-    <string name="eletrico">Elétrico</string>
-    <string name="flex">Flex</string>
-    <string name="gasolina">Gasolina</string>
-
-    <string name="conversivel">Conversível</string>
-    <string name="crossover">Crossover</string>
-    <string name="cupe">Coupe</string>
-    <string name="cupe_super_esportivo">Coupe Super Esportivo</string>
-    <string name="hatch">Hatchback</string>
-    <string name="luxo">Luxo</string>
-    <string name="minivan">Minivan</string>
-    <string name="picape">Picape (Truck)</string>
-    <string name="sedan">Sedan</string>
-    <string name="suv">SUV</string>
-    <string name="wagon">Wagon</string>
-
-    <string name="ar_condicionado">Ar Condicionado</string>
-    <string name="blindado">Blindado</string>
-
-    <string name="cadastro">Cadastro</string>
-    <string name="carroceria">Carroceria</string>
-    <string name="itens_opcionais">Itens Opcionais</string>
-    <string name="portas">Portas Passageiros</string>
-
-    <string name="clean_form">Formulário Limpo</string>
-    <string name="combustivel_invalido">Por favor, selecione uma opção de combustivel</string>
-    <string name="campo_invalido">Campo inválido</string>
-    <string name="carroceria_invalida">Carroceria inválida</string>
-    <string name="portas_invalida">Portas inválida</string>
-    <string name="preco_invalido">Preço Invalido</string>
-    <string name="dados_salvos">Dados salvo com sucesso!</string>
-    <string name="porta_nao_selecionada">Por favor, selecione Qtd. de Portas</string>
-    <string name="permissao_negada">A permissão de acesso à galeria é necessária</string>
-    <string name="permissao_negada_novamente">A permissão de acesso à galeria é necessária para continuar</string>
-    <string name="nome_invalido">Nome obrigatório</string>
-    <string name="opcoes">Opcões</string>
-
-    <string name="limpar">Limpar</string>
-    <string name="salvar">Salvar</string>
-    <string name="adicionar">Adicionar</string>
-    <string name="editar">Editar</string>
-    <string name="excluir">Excluir</string>
-
-    <string name="nome_do_carro">Nome do carro</string>
-    <string name="quatro_portas">4 Portas</string>
-    <string name="duas_portas">2 Portas</string>
-    <string name="preco">Preço</string>
-    <string name="add_carro">Adicionar Carro</string>
-
-
-    <string name="amarelo">Amarelo</string>
-    <string name="azul">Azul</string>
-    <string name="branco_perola">Branco Pérola</string>
-    <string name="branco">Branco</string>
-    <string name="cinza">Cinza</string>
-    <string name="preto">Preto</string>
-    <string name="preto_borealis">Preto Borealis</string>
-    <string name="prata">Prata</string>
-    <string name="dourada">Dourada</string>
-    <string name="rosa">Rosa</string>
-    <string name="vermelho">Vermelho</string>
-    <string name="vermelho_rosso_corsa">Vermelho Rosso Corsa</string>
-    <string name="verde">Verde</string>
-
     <string name="mercedes_benz_slc_300_branca_2018">MERCEDES-BENZ SLC 300</string>
     <string name="mercedes_benz_amg_gt63s_preta_2019">MERCEDES-BENZ AMG GT 63 S</string>
     <string name="bmw_m5_4_4_v8_cinza_2019">BMW M5 4.4 V8</string>
@@ -83,16 +16,85 @@
     <string name="mclaren_620r_preta_2020">MCLAREN 620R</string>
     <string name="pagani_utopia">Pagani Utopia</string>
 
+    <string name="alcool">Ethanol</string>
+    <string name="combustivel">Fuel</string>
+    <string name="diesel">Diesel</string>
+    <string name="eletrico">Electric</string>
+    <string name="flex">Flex</string>
+    <string name="gasolina">Gasoline</string>
+
+    <string name="conversivel">Convertible</string>
+    <string name="crossover">Crossover</string>
+    <string name="cupe">Coupe</string>
+    <string name="cupe_super_esportivo">Super Sport Coupe</string>
+    <string name="hatch">Hatchback</string>
+    <string name="luxo">Lux</string>
+    <string name="minivan">Minivan</string>
+    <string name="picape">Picape (Truck)</string>
+    <string name="sedan">Sedan</string>
+    <string name="suv">SUV</string>
+    <string name="wagon">Wagon</string>
+
+    <string name="ar_condicionado">Air conditioning</string>
+    <string name="blindado">Armored</string>
+
+    <string name="cadastro">Register</string>
+    <string name="carroceria">Bodywork</string>
+    <string name="itens_opcionais">Optional Items</string>
+    <string name="portas">Passenger Doors</string>
+
+    <string name="clean_form">Clean Form</string>
+    <string name="combustivel_invalido">Please select a fuel option</string>
+    <string name="campo_invalido">Invalid field</string>
+    <string name="carroceria_invalida">Invalid bodywork</string>
+    <string name="portas_invalida">Invalid ports</string>
+    <string name="preco_invalido">Invalid Price</string>
+    <string name="dados_salvos">Data successfully saved!</string>
+    <string name="porta_nao_selecionada">Please select Number of Doors</string>
+    <string name="permissao_negada">Gallery access permission is required</string>
+    <string name="permissao_negada_novamente">Gallery access permission is required to continue</string>
+    <string name="nome_invalido">Required name</string>
+    <string name="opcoes">Options</string>
+
+    <string name="limpar">Clean</string>
+    <string name="salvar">Salve</string>
+    <string name="adicionar">Add</string>
+    <string name="editar">Edit</string>
+    <string name="excluir">Delete</string>
+
+    <string name="nome_do_carro">Car name</string>
+    <string name="quatro_portas">4 Doors</string>
+    <string name="duas_portas">2 Doors</string>
+    <string name="preco">Price</string>
+    <string name="add_carro">Add Car</string>
+
+
+    <string name="amarelo">Yellow</string>
+    <string name="azul">Blue</string>
+    <string name="branco_perola">Pearl White</string>
+    <string name="branco">Branco</string>
+    <string name="cinza">Cinza</string>
+    <string name="preto">Preto</string>
+    <string name="preto_borealis">Preto Borealis</string>
+    <string name="prata">Prata</string>
+    <string name="dourada">Dourada</string>
+    <string name="rosa">Rosa</string>
+    <string name="vermelho">Vermelho</string>
+    <string name="vermelho_rosso_corsa">Vermelho Rosso Corsa</string>
+    <string name="verde">Verde</string>
+
     <string name="imagem_carro">Imagem de Carro</string>
     <string name="sim">Sim</string>
     <string name="nao">Nao</string>
     <string name="image_carro">Imagem do carro</string>
 
     <string name="nome_do_autor">Uildson Santos dos Santos</string>
-    <string name="descricao_app">Imagine ter uma conexão mágica e instantânea com o coração do seu carro, um vínculo que vai além da simples condução. O CarConnect é a chave para desbloquear todo o potencial do seu veículo, permitindo que você o gerencie e controle de maneiras que nunca pensou serem possíveis.</string>
+    <string name="descricao_app">Imagine having a magical, instant connection to the heart of your car, a bond that goes beyond just driving. CarConnect is the key to unlocking your vehicle\'s full potential, allowing you to manage and control it in ways you never thought possible.</string>
     <string name="email_autor">dos.santos.uildson@gmail.com</string>
-    <string name="curso_autor">Engenharia de Computação</string>
-    <string name="logo_da_utfpr">Logo da UTFPR</string>
-    <string name="sobre">Sobre</string>
-    <string name="alterar_carro">Alterar Valores</string>
+    <string name="curso_autor">Computer engineering</string>
+    <string name="logo_da_utfpr">UTFPR logo</string>
+    <string name="sobre">About</string>
+    <string name="alterar_carro">Change Values</string>
+    <string name="toggle_view">Toggle View</string>
+    <string name="logo_descricao">UNIVERSIDADE TECNOLÓGICA FEDERAL DO PARANÁ</string>
 </resources>
