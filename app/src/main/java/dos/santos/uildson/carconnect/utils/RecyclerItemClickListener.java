@@ -67,4 +67,3 @@ public class RecyclerItemClickListener extends RecyclerView.SimpleOnItemTouchLis
         return gestureDetector.onTouchEvent(e);
     }
 }
-

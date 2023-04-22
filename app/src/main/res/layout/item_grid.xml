@@ -17,11 +17,13 @@
 
     <TextView
         android:id="@+id/textViewNomeCarro"
-        android:layout_width="243dp"
-        android:layout_height="55dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
+        android:lines="3"
         android:text="LAND ROVER RANGE ROVER VOGUE 3.0 TDV6"
         android:textAllCaps="true"
+
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="parent"

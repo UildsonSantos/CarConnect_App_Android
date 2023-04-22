@@ -75,17 +75,17 @@ public class CadastroActivity extends AppCompatActivity {
                     openGallery();
                 } else {
                     // Permissão negada
-                    Toast.makeText(this, R.string.permissao_negada, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,
+                            R.string.permissao_negada,
+                            Toast.LENGTH_SHORT).show();
                 }
             });
 
     private void requestReadExternalStoragePermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) ==
-                PackageManager.PERMISSION_GRANTED) {
-            // Permissão concedida
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             openGallery();
         } else {
-            // Permissão não concedida, solicite-a
             requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
         }
     }
@@ -122,14 +122,12 @@ public class CadastroActivity extends AppCompatActivity {
         activity.startActivityForResult(intent, ALTERAR);
     }
 
-    // cria o menu de opções determinado pelo layout
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.cadastro_opcoes, menu);
         return true;
     }
 
-    // quando um menuItem é selecionado
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -169,7 +167,6 @@ public class CadastroActivity extends AppCompatActivity {
         spinnerCarroceria = findViewById(R.id.spinnerCarroceria);
 
         LinearLayout linearLayoutGaleria = findViewById(R.id.linearLayoutGaleria);
-
 
         popularSpinnerCarroceria();
 
@@ -220,7 +217,9 @@ public class CadastroActivity extends AppCompatActivity {
                 checkBoxArCondicionado.setChecked(ar_condicionado);
 
 
-                Combustivel combustivel = (Combustivel) bundle.getSerializable(CadastroActivity.COMBUSTIVEL);
+                Combustivel combustivel = (Combustivel) bundle
+                        .getSerializable(CadastroActivity.COMBUSTIVEL);
+
                 switch (combustivel) {
                     case Alcool:
                         checkBoxAlcool.setChecked(true);
@@ -237,7 +236,8 @@ public class CadastroActivity extends AppCompatActivity {
                 }
 
                 byte[] byteArray = bundle.getByteArray(CadastroActivity.IMAGEM);
-                Drawable imagem = new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length));
+                Drawable imagem = new BitmapDrawable(getResources(),
+                        BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length));
                 imageViewCarro.setImageDrawable(imagem);
             }
         }
@@ -247,7 +247,6 @@ public class CadastroActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
     }
 
 
@@ -332,18 +331,20 @@ public class CadastroActivity extends AppCompatActivity {
         } else if (checkBoxEletrico.isChecked()) {
             addCarro.setCombustivel(Combustivel.Eletrico);
         } else {
-            Toast.makeText(getApplicationContext(), getString(R.string.combustivel_invalido), Toast.LENGTH_SHORT)
-                    .show();
+            Toast.makeText(
+                    getApplicationContext(),
+                            getString(R.string.combustivel_invalido),
+                            Toast.LENGTH_SHORT).show();
             return;
         }
 
-
         if (portaId == -1) {
-            Toast.makeText(this, getString(R.string.porta_nao_selecionada), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,
+                    getString(R.string.porta_nao_selecionada),
+                    Toast.LENGTH_SHORT).show();
             return;
         } else {
             RadioButton radioButtonSelecionado = findViewById(portaId);
-
             addCarro.setPortas(Integer.parseInt(radioButtonSelecionado.getTag().toString()));
         }
 
@@ -352,19 +353,15 @@ public class CadastroActivity extends AppCompatActivity {
 
         addCarro.setBlindagem(checkBoxBlindado.isChecked());
 
-        // Converter a imagem em um array de bytes
         byte[] byteArray = getBytes((BitmapDrawable) imagemCarro);
 
-
         Intent intent = new Intent();
-
 
         intent.putExtra(IMAGEM, byteArray);
         intent.putExtra(NOME, addCarro.getNome());
         intent.putExtra(VALOR, addCarro.getValor());
 
         intent.putExtra(CARROCERIA, addCarro.getCarroceria());
-
 
         Bundle bundle = new Bundle();
         bundle.putSerializable(COMBUSTIVEL, addCarro.getCombustivel());
@@ -401,15 +398,16 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(
+            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_PERMISSION_READ_EXTERNAL_STORAGE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permissão concedida, agora podemos acessar a galeria
                 openGallery();
             } else {
-                // Permissão negada, informe o usuário e solicite novamente
-                Toast.makeText(this, R.string.permissao_negada_novamente, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,
+                        R.string.permissao_negada_novamente,
+                        Toast.LENGTH_SHORT).show();
                 requestReadExternalStoragePermission();
             }
         }
@@ -436,6 +434,7 @@ public class CadastroActivity extends AppCompatActivity {
 
             int finalWidth = maxWidth;
             int finalHeight = maxHeight;
+
             if (ratioMax > ratioBitmap) {
                 finalWidth = (int) ((float) maxHeight * ratioBitmap);
             } else {
@@ -447,6 +446,4 @@ public class CadastroActivity extends AppCompatActivity {
             return null;
         }
     }
-
-
 }

@@ -89,8 +89,6 @@ public class ListagemActivity extends AppCompatActivity {
 
             actionMode = null;
             viewSelecionada = null;
-
-//            listViewCarros.setEnabled(true);
         }
     };
 
@@ -154,14 +152,15 @@ public class ListagemActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.listagem_opcoes, menu);
 
         MenuItem item = menu.findItem(R.id.menuItemToggle);
 
-        item.setIcon(isGrid ? R.drawable.ic_baseline_format_list_bulleted_24 : R.drawable.ic_baseline_grid_view_24);
+        item.setIcon(isGrid ?
+                R.drawable.ic_baseline_format_list_bulleted_24
+                : R.drawable.ic_baseline_grid_view_24);
 
         return true;
     }
@@ -173,7 +172,9 @@ public class ListagemActivity extends AppCompatActivity {
             case R.id.menuItemToggle:
                 isGrid = !isGrid;
 
-                item.setIcon(isGrid ? R.drawable.ic_baseline_format_list_bulleted_24 : R.drawable.ic_baseline_grid_view_24);
+                item.setIcon(isGrid ?
+                        R.drawable.ic_baseline_format_list_bulleted_24
+                        : R.drawable.ic_baseline_grid_view_24);
                 setLayoutManager(isGrid);
                 editor.putBoolean(IS_GRID, isGrid);
                 editor.apply();
@@ -204,22 +205,20 @@ public class ListagemActivity extends AppCompatActivity {
 
     private void toastCarro(Carro carroSelecionado) {
 
-        // Obter o Drawable da imagem do objeto Carro selecionado
         Drawable drawable = carroSelecionado.getImage();
 
-        // Obter o nome do carro selecionado
         String nomeCarro = carroSelecionado.getNome();
 
-        // Criar uma nova View para o Toast
-        View toastView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.toast_layout, null);
+        View toastView = LayoutInflater
+                .from(getApplicationContext())
+                .inflate(R.layout.toast_layout, null);
+
         ImageView toastImageView = toastView.findViewById(R.id.toastImageView);
         TextView toastTextView = toastView.findViewById(R.id.toastTextView);
 
-        // Definir a imagem e o nome do carro na View do Toast
         toastImageView.setImageDrawable(drawable);
         toastTextView.setText(nomeCarro);
 
-        // Criar e exibir o Toast
         Toast toast = new Toast(getApplicationContext());
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(toastView);
@@ -244,7 +243,7 @@ public class ListagemActivity extends AppCompatActivity {
 
         Combustivel[] combustiveis = Combustivel.values();
 
-        for (int cont = 0; cont < nomes.length; cont++) {
+        for (int cont = 0; cont < 5; cont++) {
 
             carro = new Carro(nomes[cont], carrocerias[cont]);
 
@@ -294,7 +293,9 @@ public class ListagemActivity extends AppCompatActivity {
             Combustivel combustivel = (Combustivel) bundle.getSerializable(CadastroActivity.COMBUSTIVEL);
 
             byte[] byteArray = bundle.getByteArray(CadastroActivity.IMAGEM);
-            Drawable imagem = new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length));
+            Drawable imagem = new BitmapDrawable(
+                    getResources(),
+                    BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length));
 
             if (requestCode == CadastroActivity.ALTERAR) {
                 Carro update = carros.get(posicaoSelecionada);

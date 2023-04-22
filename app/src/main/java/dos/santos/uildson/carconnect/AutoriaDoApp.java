@@ -41,8 +41,10 @@ public class AutoriaDoApp extends AppCompatActivity {
         int startIndex = text.indexOf("CarConnect");
         int endIndex = startIndex + "CarConnect".length();
 
-        ForegroundColorSpan foregroundSpan = new ForegroundColorSpan(ContextCompat.getColor(this, R.color.pumpkin));
-        spannableString.setSpan(foregroundSpan, startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ForegroundColorSpan foregroundSpan = new ForegroundColorSpan(
+                ContextCompat.getColor(this, R.color.pumpkin));
+        spannableString.setSpan(
+                foregroundSpan, startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
         spannableString.setSpan(boldSpan, startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -60,7 +62,6 @@ public class AutoriaDoApp extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             cancelar();
-
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -75,5 +76,4 @@ public class AutoriaDoApp extends AppCompatActivity {
         setResult(Activity.RESULT_CANCELED);
         finish();
     }
-
 }

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/menu_toggle_view"
-        android:title="@string/toggle_view"
-        android:icon="@drawable/ic_baseline_format_list_bulleted_24"
-       />
-</menu>
