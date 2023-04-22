@@ -55,6 +55,9 @@
     <string name="permissao_negada_novamente">Gallery access permission is required to continue</string>
     <string name="nome_invalido">Required name</string>
     <string name="opcoes">Options</string>
+    <string name="item_excluido">Deleted item</string>
+    <string name="desfazer">Undo</string>
+
 
     <string name="limpar">Clean</string>
     <string name="salvar">Salve</string>
@@ -96,5 +99,4 @@
     <string name="sobre">About</string>
     <string name="alterar_carro">Change Values</string>
     <string name="toggle_view">Toggle View</string>
-    <string name="logo_descricao">UNIVERSIDADE TECNOLÓGICA FEDERAL DO PARANÁ</string>
 </resources>

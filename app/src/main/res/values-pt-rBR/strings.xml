@@ -56,6 +56,9 @@
     <string name="permissao_negada_novamente">A permissão de acesso à galeria é necessária para continuar</string>
     <string name="nome_invalido">Nome obrigatório</string>
     <string name="opcoes">Opcões</string>
+    <string name="item_excluido">Item deletado</string>
+    <string name="desfazer">Desfazer</string>
+
 
     <string name="limpar">Limpar</string>
     <string name="salvar">Salvar</string>

@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -23,9 +24,12 @@ public class CarrosAdapter extends RecyclerView.Adapter<CarrosAdapter.CarroHolde
     public static final int LAYOUT_LIST = 2;
     private boolean isGridView = false;
     private Context context;
-    List<Carro> carros;
+    private List<Carro> carros;
     private NumberFormat numberFormat;
     private SharedPreferences sharedPreferences;
+    private List<Carro> carrosRemovidos;
+    private Carro carroRemovidoRecente;
+    private int posicaoCarroRemovidoRecente;
 
 
     public static class CarroHolder extends RecyclerView.ViewHolder {
@@ -60,6 +64,22 @@ public class CarrosAdapter extends RecyclerView.Adapter<CarrosAdapter.CarroHolde
         this.isGridView = sharedPreferences.getBoolean(ListagemActivity.IS_GRID, isGridView);
 
         numberFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+
+        carrosRemovidos = new ArrayList<>();
+    }
+
+    public void removeItem(int position) {
+        carroRemovidoRecente = carros.get(position);
+        posicaoCarroRemovidoRecente = position;
+        carros.remove(position);
+        carrosRemovidos.add(carroRemovidoRecente);
+        notifyItemRemoved(position);
+    }
+
+    public void undoLastRemoval() {
+        carros.add(posicaoCarroRemovidoRecente, carroRemovidoRecente);
+        carrosRemovidos.remove(carroRemovidoRecente);
+        notifyItemInserted(posicaoCarroRemovidoRecente);
     }
 
     @NonNull

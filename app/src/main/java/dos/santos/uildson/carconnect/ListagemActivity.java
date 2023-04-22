@@ -24,11 +24,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import dos.santos.uildson.carconnect.utils.MyItemTouchHelperCallback;
 import dos.santos.uildson.carconnect.utils.RecyclerItemClickListener;
 
 public class ListagemActivity extends AppCompatActivity {
@@ -263,6 +265,10 @@ public class ListagemActivity extends AppCompatActivity {
         carrosAdapter = new CarrosAdapter(this, carros, shared);
         recyclerViewCarros.setAdapter(carrosAdapter);
         setLayoutManager(isGrid);
+
+        MyItemTouchHelperCallback callback = new MyItemTouchHelperCallback(carrosAdapter, recyclerViewCarros);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(recyclerViewCarros);
     }
 
     private void update() {
