@@ -1,7 +1,5 @@
 package dos.santos.uildson.carconnect;
 
-import static dos.santos.uildson.carconnect.ListagemActivity.IS_GRID;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
@@ -17,6 +15,9 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import dos.santos.uildson.carconnect.modelo.Carro;
+import dos.santos.uildson.carconnect.persistencia.CarrosDatabase;
 
 public class CarrosAdapter extends RecyclerView.Adapter<CarrosAdapter.CarroHolder> {
 
@@ -57,7 +58,7 @@ public class CarrosAdapter extends RecyclerView.Adapter<CarrosAdapter.CarroHolde
         }
     }
 
-    public CarrosAdapter( Context context, List<Carro> carros,SharedPreferences sharedPreferences) {
+    public CarrosAdapter(Context context, List<Carro> carros, SharedPreferences sharedPreferences) {
         this.carros = carros;
         this.context = context;
         this.sharedPreferences = sharedPreferences;
@@ -74,6 +75,8 @@ public class CarrosAdapter extends RecyclerView.Adapter<CarrosAdapter.CarroHolde
         carros.remove(position);
         carrosRemovidos.add(carroRemovidoRecente);
         notifyItemRemoved(position);
+
+        CarrosDatabase.getDatabase(context).carroDao().delete(carroRemovidoRecente);
     }
 
     public void undoLastRemoval() {
@@ -102,10 +105,10 @@ public class CarrosAdapter extends RecyclerView.Adapter<CarrosAdapter.CarroHolde
         Carro carro = carros.get(position);
         Context context = holder.itemView.getContext();
 
-        holder.imageView.setImageDrawable(carros.get(position).getImage());
+        holder.imageView.setImageDrawable(carros.get(position).getImageDrawable());
         holder.textViewNomeCarro.setText(carros.get(position).getNome());
 
-        if (carros.get(position).isAr_condicionado()) {
+        if (carros.get(position).getArCondicionado()) {
             holder.textViewArCondicionadoItem
                     .setText(context.getResources().getString(R.string.sim));
         } else {
@@ -128,14 +131,13 @@ public class CarrosAdapter extends RecyclerView.Adapter<CarrosAdapter.CarroHolde
                 break;
         }
 
-        if (carros.get(position).isBlindagem()) {
+        if (carros.get(position).getBlindagem()) {
             holder.textViewBlindadoItem.setText(context.getResources().getString(R.string.sim));
         } else {
             holder.textViewBlindadoItem.setText(context.getResources().getString(R.string.nao));
         }
 
         String precoFormatado = numberFormat.format(carros.get(position).getValor());
-
         holder.textViewPrecoItem.setText(precoFormatado);
 
         String strPort = Integer.toString(carros.get(position).getPortas());

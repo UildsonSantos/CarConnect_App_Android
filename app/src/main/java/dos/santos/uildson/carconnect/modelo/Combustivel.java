@@ -1,4 +1,4 @@
-package dos.santos.uildson.carconnect;
+package dos.santos.uildson.carconnect.modelo;
 
 import java.io.Serializable;
 

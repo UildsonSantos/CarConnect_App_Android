@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -34,7 +33,11 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
+
+import dos.santos.uildson.carconnect.modelo.Carro;
+import dos.santos.uildson.carconnect.modelo.Combustivel;
 
 public class CadastroActivity extends AppCompatActivity {
 
@@ -69,17 +72,19 @@ public class CadastroActivity extends AppCompatActivity {
     private Spinner spinnerCarroceria;
 
     private final ActivityResultLauncher<String> requestPermissionLauncher =
-            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                if (isGranted) {
-                    // Permissão concedida
-                    openGallery();
-                } else {
-                    // Permissão negada
-                    Toast.makeText(this,
-                            R.string.permissao_negada,
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
+            registerForActivityResult(
+                    new ActivityResultContracts.RequestPermission(),
+                    isGranted -> {
+                        if (isGranted) {
+                            // Permissão concedida
+                            openGallery();
+                        } else {
+                            // Permissão negada
+                            Toast.makeText(this,
+                                    R.string.permissao_negada,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
     private void requestReadExternalStoragePermission() {
         if (ContextCompat.checkSelfPermission(this,
@@ -99,26 +104,21 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
     public static void update(AppCompatActivity activity, Carro update) {
-
         Intent intent = new Intent(activity, CadastroActivity.class);
-
         intent.putExtra(MODO, ALTERAR);
 
-        byte[] byteArray = getBytes((BitmapDrawable) update.getImage());
+        byte[] byteArray = getBytes((BitmapDrawable) update.getImageDrawable());
         intent.putExtra(IMAGEM, byteArray);
-
         intent.putExtra(NOME, update.getNome());
         intent.putExtra(VALOR, update.getValor());
         intent.putExtra(CARROCERIA, update.getCarroceria());
+        intent.putExtra(PORTAS, update.getPortas());
+        intent.putExtra(BLINDAGEM, update.getBlindagem());
+        intent.putExtra(AR_CONDICIONADO, update.getArCondicionado());
 
         Bundle bundle = new Bundle();
         bundle.putSerializable(COMBUSTIVEL, update.getCombustivel());
         intent.putExtras(bundle);
-
-        intent.putExtra(PORTAS, update.getPortas());
-        intent.putExtra(BLINDAGEM, update.isBlindagem());
-        intent.putExtra(AR_CONDICIONADO, update.isAr_condicionado());
-
         activity.startActivityForResult(intent, ALTERAR);
     }
 
@@ -257,22 +257,24 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
     public void popularSpinnerCarroceria() {
-        ArrayList<String> lista = new ArrayList<>();
+        ArrayList<String> carrocerias = new ArrayList<>();
 
-        lista.add(getString(R.string.hatch));
-        lista.add(getString(R.string.sedan));
-        lista.add(getString(R.string.suv));
-        lista.add(getString(R.string.crossover));
-        lista.add(getString(R.string.minivan));
-        lista.add(getString(R.string.picape));
-        lista.add(getString(R.string.wagon));
-        lista.add(getString(R.string.conversivel));
-        lista.add(getString(R.string.cupe));
-        lista.add(getString(R.string.luxo));
+        carrocerias.add(getString(R.string.hatch));
+        carrocerias.add(getString(R.string.sedan));
+        carrocerias.add(getString(R.string.suv));
+        carrocerias.add(getString(R.string.crossover));
+        carrocerias.add(getString(R.string.minivan));
+        carrocerias.add(getString(R.string.picape));
+        carrocerias.add(getString(R.string.wagon));
+        carrocerias.add(getString(R.string.conversivel));
+        carrocerias.add(getString(R.string.cupe));
+        carrocerias.add(getString(R.string.luxo));
+
+        Collections.sort(carrocerias);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1,
-                lista);
+                carrocerias);
 
         spinnerCarroceria.setAdapter(adapter);
     }
@@ -280,26 +282,19 @@ public class CadastroActivity extends AppCompatActivity {
     public void limparCampos() {
         texInputEditTextNome.setText(null);
         texInputEditTextValor.setText(null);
-
         checkBoxAlcool.setChecked(false);
         checkBoxGasolina.setChecked(false);
         checkBoxDiesel.setChecked(false);
         checkBoxEletrico.setChecked(false);
-
         checkBoxBlindado.setChecked(false);
         checkBoxArCondicionado.setChecked(false);
-
         radioGroupPortas.clearCheck();
-
         texInputEditTextNome.requestFocus();
-
         Toast.makeText(this, R.string.clean_form, Toast.LENGTH_LONG).show();
     }
 
     public void salvarDados() {
-
         Drawable imagemCarro = imageViewCarro.getDrawable();
-
         String nome = Objects.requireNonNull(texInputEditTextNome.getText()).toString();
         String valorString = Objects.requireNonNull(texInputEditTextValor.getText()).toString();
         String carroceria = (String) spinnerCarroceria.getSelectedItem();
@@ -311,7 +306,9 @@ public class CadastroActivity extends AppCompatActivity {
             return;
         }
 
-        Carro addCarro = new Carro(nome, carroceria);
+        Carro addCarro = new Carro();
+        addCarro.setNome(nome);
+        addCarro.setCarroceria(carroceria);
 
         try {
             float valor = Float.parseFloat(valorString);
@@ -333,8 +330,8 @@ public class CadastroActivity extends AppCompatActivity {
         } else {
             Toast.makeText(
                     getApplicationContext(),
-                            getString(R.string.combustivel_invalido),
-                            Toast.LENGTH_SHORT).show();
+                    getString(R.string.combustivel_invalido),
+                    Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -348,38 +345,30 @@ public class CadastroActivity extends AppCompatActivity {
             addCarro.setPortas(Integer.parseInt(radioButtonSelecionado.getTag().toString()));
         }
 
-
-        addCarro.setAr_condicionado(checkBoxArCondicionado.isChecked());
-
+        addCarro.setArCondicionado(checkBoxArCondicionado.isChecked());
         addCarro.setBlindagem(checkBoxBlindado.isChecked());
-
         byte[] byteArray = getBytes((BitmapDrawable) imagemCarro);
 
         Intent intent = new Intent();
-
         intent.putExtra(IMAGEM, byteArray);
         intent.putExtra(NOME, addCarro.getNome());
         intent.putExtra(VALOR, addCarro.getValor());
-
         intent.putExtra(CARROCERIA, addCarro.getCarroceria());
+        intent.putExtra(PORTAS, addCarro.getPortas());
+        intent.putExtra(BLINDAGEM, addCarro.getBlindagem());
+        intent.putExtra(AR_CONDICIONADO, addCarro.getArCondicionado());
 
         Bundle bundle = new Bundle();
         bundle.putSerializable(COMBUSTIVEL, addCarro.getCombustivel());
-
         intent.putExtras(bundle);
-        intent.putExtra(PORTAS, addCarro.getPortas());
-        intent.putExtra(BLINDAGEM, addCarro.isBlindagem());
-        intent.putExtra(AR_CONDICIONADO, addCarro.isAr_condicionado());
 
         setResult(Activity.RESULT_OK, intent);
         finish();
-
     }
 
     @NonNull
     private static byte[] getBytes(BitmapDrawable imagemCarro) {
         Bitmap bitmap = imagemCarro.getBitmap();
-
         Bitmap resizedImage = resizeImage(bitmap, 512, 512);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         resizedImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
@@ -412,7 +401,6 @@ public class CadastroActivity extends AppCompatActivity {
             }
         }
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
