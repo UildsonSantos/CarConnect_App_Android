@@ -3,11 +3,9 @@ package dos.santos.uildson.carconnect;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +20,7 @@ import java.util.Locale;
 import dos.santos.uildson.carconnect.modelo.Carro;
 import dos.santos.uildson.carconnect.modelo.Carroceria;
 import dos.santos.uildson.carconnect.persistencia.AppDatabase;
+import dos.santos.uildson.carconnect.utils.UtilsDate;
 
 public class CarrosAdapter extends RecyclerView.Adapter<CarrosAdapter.CarroHolder> {
 
@@ -46,6 +45,7 @@ public class CarrosAdapter extends RecyclerView.Adapter<CarrosAdapter.CarroHolde
         public TextView textViewBlindadoItem;
         public TextView textViewPortasItem;
         public TextView textViewCarroceriaItem;
+        public TextView textViewDataCompraItem;
 
         public CarroHolder(@NonNull View itemView) {
             super(itemView);
@@ -58,6 +58,7 @@ public class CarrosAdapter extends RecyclerView.Adapter<CarrosAdapter.CarroHolde
             textViewBlindadoItem = itemView.findViewById(R.id.textViewBlindadoItem);
             textViewPortasItem = itemView.findViewById(R.id.textViewPortasItem);
             textViewCarroceriaItem = itemView.findViewById(R.id.textViewCarroceriaItem);
+            textViewDataCompraItem = itemView.findViewById(R.id.textViewDataCompraItem);
         }
     }
 
@@ -76,7 +77,7 @@ public class CarrosAdapter extends RecyclerView.Adapter<CarrosAdapter.CarroHolde
     @NonNull
     @Override
     public CarroHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        int layoutId = viewType == LAYOUT_GRID ? R.layout.item_grid : R.layout.linha_lista_carros;
+        int layoutId = viewType == LAYOUT_GRID ? R.layout.item_grid_carros : R.layout.item_lista_carros;
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(layoutId, parent, false);
         return new CarroHolder(view);
@@ -95,6 +96,7 @@ public class CarrosAdapter extends RecyclerView.Adapter<CarrosAdapter.CarroHolde
 
         holder.imageView.setImageDrawable(carros.get(position).getImageDrawable());
         holder.textViewNomeCarro.setText(carros.get(position).getNome());
+        holder.textViewDataCompraItem.setText(UtilsDate.formatDate(context, carros.get(position).getDataCompra()));
 
         if (carros.get(position).getArCondicionado()) {
             holder.textViewArCondicionadoItem

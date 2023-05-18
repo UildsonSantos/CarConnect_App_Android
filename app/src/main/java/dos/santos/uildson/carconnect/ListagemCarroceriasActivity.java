@@ -39,12 +39,12 @@ public class ListagemCarroceriasActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_carrocerias_list);
+        setContentView(R.layout.activity_listagem_carrocerias);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_baseline_home);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_baseline_home_48);
         }
 
         listViewCarroceria = findViewById(R.id.listViewItens);

@@ -26,7 +26,7 @@ public interface CarroDao {
     Carro getCarroPorId(int id);
 
     @Query("SELECT * FROM carros")
-    List<Carro> getAll();
+    List<Carro> findAll();
 
     @Query("SELECT count(*) FROM carros WHERE carroceriaId = :id LIMIT 1")
     int carroceriaEmUsoPorId(long id);

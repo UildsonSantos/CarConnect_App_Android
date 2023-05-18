@@ -9,7 +9,7 @@
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menuItemNovo"
-        android:icon="@android:drawable/ic_input_add"
+        android:icon="@drawable/ic_baseline_add_circle_outline"
         android:title="@string/novo"
         app:showAsAction="always" />
 </menu>

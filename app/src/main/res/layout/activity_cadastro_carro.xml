@@ -22,7 +22,7 @@
             android:layout_marginTop="16dp"
             android:text="@string/carroceria"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/texInputLayoutPreco" />
+            app:layout_constraintTop_toBottomOf="@+id/texInputLayoutDataCompra" />
 
         <Spinner
             android:id="@+id/spinnerCarroceria"
@@ -141,8 +141,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            android:drawableStart="@drawable/ic_ar_condicionado_24"
-            android:drawableLeft="@drawable/ic_ar_condicionado_24"
+            android:drawableStart="@drawable/ic_ar_condicionado"
+            android:drawableLeft="@drawable/ic_ar_condicionado"
             android:text="@string/ar_condicionado"
             app:layout_constraintBottom_toBottomOf="@+id/checkBoxBlindado"
             app:layout_constraintStart_toEndOf="@+id/checkBoxBlindado" />
@@ -204,11 +204,27 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/texInputLayoutDataCompra"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/texInputLayoutPreco">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditTextDataCompra"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/data_compra"
+                android:inputType="date" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <LinearLayout
             android:id="@+id/linearLayoutGaleria"
-            android:layout_width="168dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="90dp"
+            android:layout_width="179dp"
+            android:layout_height="71dp"
+            android:layout_marginTop="60dp"
             android:clickable="true"
             android:gravity="center|start"
             android:onClick="onLinearLayoutClicked"
@@ -220,18 +236,20 @@
                 android:id="@+id/imageViewCarro"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
+                android:layout_margin="8dp"
                 android:src="@drawable/audi_r8_v10_performance_amarelo_2022"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="wrap_content"
+                android:layout_width="86dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:clickable="true"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
                 android:drawableLeft="@drawable/ic_baseline_add_to_photos_24"
+                android:gravity="center_vertical"
+                android:minHeight="48dp"
                 android:text="Galeria"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewCadastro" />
@@ -240,11 +258,18 @@
 
         <Button
             android:id="@+id/btnAdicionarCarroceria"
-            android:layout_width="46dp"
+            android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="62dp"
+            android:layout_marginRight="62dp"
             android:onClick="addNewCarroceria"
-            android:text="+"
+            android:padding="12dp"
+            app:icon="@drawable/ic_baseline_add"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/spinnerCarroceria"
             app:layout_constraintTop_toBottomOf="@+id/textViewCarroceriaItem" />
 

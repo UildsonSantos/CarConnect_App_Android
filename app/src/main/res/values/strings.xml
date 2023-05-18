@@ -112,4 +112,6 @@
     <string name="ok">Ok</string>
     <string name="confirmacao">Confirmation</string>
     <string name="feito">Done</string>
+    <string name="data_compra">Data de Compra</string>
+    <string name="data_invalida">Data Invalida</string>
 </resources>

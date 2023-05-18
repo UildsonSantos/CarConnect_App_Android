@@ -2,6 +2,7 @@ package dos.santos.uildson.carconnect;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -34,6 +36,8 @@ import androidx.core.content.ContextCompat;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -41,6 +45,7 @@ import dos.santos.uildson.carconnect.modelo.Carro;
 import dos.santos.uildson.carconnect.modelo.Carroceria;
 import dos.santos.uildson.carconnect.modelo.Combustivel;
 import dos.santos.uildson.carconnect.persistencia.AppDatabase;
+import dos.santos.uildson.carconnect.utils.UtilsDate;
 
 public class CadastroCarroActivity extends AppCompatActivity {
 
@@ -55,7 +60,8 @@ public class CadastroCarroActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_SELECT_IMAGE = 100;
     private static final int REQUEST_CODE_PERMISSION_READ_EXTERNAL_STORAGE = 5;
 
-    private TextInputEditText texInputEditTextNome, texInputEditTextValor;
+    private TextInputEditText texInputEditTextNome,
+            texInputEditTextValor, textInputEditTextDataCompra;
 
     private CheckBox checkBoxAlcool,
             checkBoxGasolina,
@@ -70,6 +76,8 @@ public class CadastroCarroActivity extends AppCompatActivity {
     private List<Carroceria> carroceriasDisponiveis;
     private Carro carro;
     private int modo;
+    private Calendar dataCorrent;
+    String textoDataCorrent;
 
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(
@@ -136,12 +144,13 @@ public class CadastroCarroActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastro);
+        setContentView(R.layout.activity_cadastro_carro);
 
         imageViewCarro = findViewById(R.id.imageViewCarro);
 
         texInputEditTextNome = findViewById(R.id.texInputEditTextNome);
         texInputEditTextValor = findViewById(R.id.textInputEditTextValor);
+        textInputEditTextDataCompra = findViewById(R.id.textInputEditTextDataCompra);
 
         checkBoxAlcool = findViewById(R.id.checkBoxAlcool);
         checkBoxGasolina = findViewById(R.id.checkBoxGasolina);
@@ -162,6 +171,41 @@ public class CadastroCarroActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
+        Calendar dataMaxima = Calendar.getInstance();
+        dataCorrent = Calendar.getInstance();
+        textInputEditTextDataCompra.setFocusable(false);
+
+        textInputEditTextDataCompra.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Criar o DatePickerDialog com o estilo spinner
+                DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        // Executar ações com a data selecionada
+                        dataCorrent.set(year, monthOfYear, dayOfMonth);
+
+                        textoDataCorrent =
+                                UtilsDate.formatDate(CadastroCarroActivity.this,
+                                        dataCorrent.getTime());
+
+                        textInputEditTextDataCompra.setText(textoDataCorrent);
+                    }
+                };
+
+                DatePickerDialog picker = new DatePickerDialog(CadastroCarroActivity.this,
+                        R.style.CustomDatePickerDialogTheme,
+                        listener,
+                        dataCorrent.get(Calendar.YEAR),
+                        dataCorrent.get(Calendar.MONTH),
+                        dataCorrent.get(Calendar.DAY_OF_MONTH));
+                picker.getDatePicker().setMaxDate(dataMaxima.getTimeInMillis());
+
+                picker.show();
+
+            }
+        });
 
         if (bundle != null) {
 
@@ -188,6 +232,14 @@ public class CadastroCarroActivity extends AppCompatActivity {
                             public void run() {
                                 texInputEditTextNome.setText(carro.getNome());
                                 texInputEditTextValor.setText(String.valueOf(carro.getValor()));
+
+                                dataCorrent.setTime(carro.getDataCompra());
+
+                                String dataDeCadastro = UtilsDate
+                                        .formatDate(CadastroCarroActivity.this,
+                                                carro.getDataCompra());
+
+                                textInputEditTextDataCompra.setText(dataDeCadastro);
 
                                 int posicao = posicaoCarroceria(carro.getCarroceriaId());
                                 spinnerCarroceria.setSelection(posicao);
@@ -250,6 +302,7 @@ public class CadastroCarroActivity extends AppCompatActivity {
     public void limparCampos() {
         texInputEditTextNome.setText(null);
         texInputEditTextValor.setText(null);
+        textInputEditTextDataCompra.setText(null);
         checkBoxAlcool.setChecked(false);
         checkBoxGasolina.setChecked(false);
         checkBoxDiesel.setChecked(false);
@@ -284,6 +337,15 @@ public class CadastroCarroActivity extends AppCompatActivity {
             return;
         }
         carro.setNome(nome);
+
+        String dataCompra = Objects.requireNonNull(textInputEditTextDataCompra.getText()).toString();
+        if (nome.trim().isEmpty()) {
+            texInputEditTextNome.setError(getString(R.string.data_invalida));
+            texInputEditTextNome.requestFocus();
+            return;
+        }
+
+        carro.setDataCompra(dataCorrent.getTime());
 
         Carroceria carroceriaEscolhida = (Carroceria) spinnerCarroceria.getSelectedItem();
         if (carroceriaEscolhida != null){
@@ -448,5 +510,16 @@ public class CadastroCarroActivity extends AppCompatActivity {
 
     public void addNewCarroceria(View view) {
         ListagemCarroceriasActivity.abrir(this, CODE_CADASTRO_CATEGORIA);
+    }
+
+    private void atualizarTextInputEditText(){
+        textInputEditTextDataCompra.setText(textoDataCorrent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        atualizarTextInputEditText();
+
     }
 }

@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="250dp"
-        android:layout_height="190dp"
+        android:layout_width="207dp"
+        android:layout_height="155dp"
         android:contentDescription="@string/imagem_carro"
         android:foregroundGravity="center"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,17 +17,20 @@
 
     <TextView
         android:id="@+id/textViewNomeCarro"
-        android:layout_width="match_parent"
+        android:layout_width="207dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:lines="3"
-        android:text="LAND ROVER RANGE ROVER VOGUE 3.0 TDV6"
-        android:textAllCaps="true"
 
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:maxLines="3"
+        android:text="LAND ROVER RANGE ROVER VOGUE 3.0 TDV6 ksdhaglkd jaslkdhjflakjd  sdlkjhfasldkfjh  asdkhjfalsdhkj  asdfkljhalskf"
+        android:textAllCaps="true"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView21"
@@ -197,4 +200,30 @@
         app:layout_constraintEnd_toStartOf="@+id/textViewPrecoItem"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewNomeCarro" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/data_compra"
+        android:textSize="20sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <TextView
+        android:id="@+id/textViewDataCompraItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:text="17/05/23"
+        android:visibility="gone"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
+        app:layout_constraintStart_toEndOf="@+id/textView2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,4 +22,6 @@
         <item name="boxBackgroundColor">@color/textInputLayoutBoxBackgroundColor</item>
         <item name="boxStrokeColor">@color/textInputLayoutBoxStrokeColor</item>
     </style>
+
+
 </resources>

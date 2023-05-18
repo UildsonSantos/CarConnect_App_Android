@@ -22,7 +22,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -92,7 +91,7 @@ public class ListagemCarrosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         lerPreferenciaLayout();
-        setContentView(R.layout.activity_listagem);
+        setContentView(R.layout.activity_listagem_carros);
 
         recyclerViewCarros = findViewById(R.id.recyclerViewCarros);
         recyclerViewCarros.addOnItemTouchListener(
@@ -126,7 +125,7 @@ public class ListagemCarrosActivity extends AppCompatActivity {
             public void run() {
                 AppDatabase database = AppDatabase.getDatabase(ListagemCarrosActivity.this);
 
-                carros = database.carroDao().getAll();
+                carros = database.carroDao().findAll();
 
                 ListagemCarrosActivity.this.runOnUiThread(new Runnable() {
                     @Override
@@ -225,7 +224,7 @@ public class ListagemCarrosActivity extends AppCompatActivity {
             public void run() {
                 AppDatabase database = AppDatabase.getDatabase(ListagemCarrosActivity.this);
 
-                carros = database.carroDao().getAll();
+                carros = database.carroDao().findAll();
 
                 ListagemCarrosActivity.this.runOnUiThread(new Runnable() {
                     @Override

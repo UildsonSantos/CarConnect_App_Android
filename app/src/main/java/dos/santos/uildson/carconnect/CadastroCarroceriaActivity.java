@@ -56,7 +56,7 @@ public class CadastroCarroceriaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_carroceria);
+        setContentView(R.layout.activity_cadastro_carroceria);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
