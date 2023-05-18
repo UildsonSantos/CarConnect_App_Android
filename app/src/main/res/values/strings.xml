@@ -99,4 +99,17 @@
     <string name="sobre">About</string>
     <string name="alterar_carro">Change Values</string>
     <string name="toggle_view">Toggle View</string>
+    <string name="alterar_descricao_carroceria">Change description</string>
+    <string name="nova_descricao_carroceria">New bodywork</string>
+    <string name="carroceria_cadastrada">Bodywork already registered</string>
+    <string name="cancelar">Cancel</string>
+    <string name="tem_certeza">Are you sure you want to delete</string>
+    <string name="novo">New</string>
+    <string name="abrir">Open</string>
+    <string name="apagar">Delete</string>
+    <string name="carroceria_em_uso">Body in use</string>
+    <string name="nao_pode_ser_excluida">Cannot be deleted</string>
+    <string name="ok">Ok</string>
+    <string name="confirmacao">Confirmation</string>
+    <string name="feito">Done</string>
 </resources>

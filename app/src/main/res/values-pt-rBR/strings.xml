@@ -100,4 +100,17 @@
     <string name="sobre">Sobre</string>
     <string name="alterar_carro">Alterar Valores</string>
     <string name="toggle_view">Alternar visualização</string>
+    <string name="alterar_descricao_carroceria">Alterar a descriçao</string>
+    <string name="nova_descricao_carroceria">Nova carroceria</string>
+    <string name="carroceria_cadastrada">Carroceria já cadastrada</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="tem_certeza">Você tem certeza que deseja excluir</string>
+    <string name="novo">Novo</string>
+    <string name="abrir">Abrir</string>
+    <string name="apagar">Apagar</string>
+    <string name="carroceria_em_uso">Carroceria em uso</string>
+    <string name="nao_pode_ser_excluida">Nao pode ser excluida</string>
+    <string name="ok">Ok</string>
+    <string name="confirmacao">Confirmação</string>
+    <string name="feito">Feito</string>
 </resources>

@@ -1,45 +1,43 @@
 package dos.santos.uildson.carconnect.modelo;
 
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-import java.io.ByteArrayOutputStream;
+import java.util.Date;
 
-@Entity(tableName = "carros")
+@Entity(tableName = "carros",
+        foreignKeys = @ForeignKey(entity = Carroceria.class,
+                parentColumns = "id",
+                childColumns = "carroceriaId",
+                onDelete = ForeignKey.RESTRICT))
 public class Carro {
+
     @PrimaryKey(autoGenerate = true)
     private int id;
 
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
     private byte[] imageBytes;
 
-    @ColumnInfo(name = "nome")
-    private String nome;
-
-    @ColumnInfo(name = "carroceria")
-    private String carroceria;
-
-    @ColumnInfo(name = "combustivel")
-    private Combustivel combustivel;
-
-    @ColumnInfo(name = "valor")
-    private float valor;
-
-    @ColumnInfo(name = "portas")
-    private int portas;
-
-    @ColumnInfo(name = "blindagem")
-    private boolean blindagem;
+    @ColumnInfo(index = true)
+    private int carroceriaId;
 
     @ColumnInfo(name = "ar_condicionado")
     private boolean arCondicionado;
+
+    private String nome;
+    private Combustivel combustivel;
+    private float valor;
+    private int portas;
+    private boolean blindagem;
+    private Date dataCompra;
+
 
     public Carro() {
     }
@@ -81,12 +79,12 @@ public class Carro {
         this.valor = valor;
     }
 
-    public String getCarroceria() {
-        return carroceria;
+    public int getCarroceriaId() {
+        return carroceriaId;
     }
 
-    public void setCarroceria(String carroceria) {
-        this.carroceria = carroceria;
+    public void setCarroceriaId(int carroceriaId) {
+        this.carroceriaId = carroceriaId;
     }
 
     public Combustivel getCombustivel() {
@@ -119,5 +117,13 @@ public class Carro {
 
     public void setArCondicionado(boolean arCondicionado) {
         this.arCondicionado = arCondicionado;
+    }
+
+    public Date getDataCompra() {
+        return dataCompra;
+    }
+
+    public void setDataCompra(Date dataCompra) {
+        this.dataCompra = dataCompra;
     }
 }

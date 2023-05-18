@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -28,12 +29,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import dos.santos.uildson.carconnect.modelo.Carro;
-import dos.santos.uildson.carconnect.modelo.Combustivel;
-import dos.santos.uildson.carconnect.persistencia.CarrosDatabase;
-import dos.santos.uildson.carconnect.utils.MyItemTouchHelperCallback;
+import dos.santos.uildson.carconnect.persistencia.AppDatabase;
 import dos.santos.uildson.carconnect.utils.RecyclerItemClickListener;
 
-public class ListagemActivity extends AppCompatActivity {
+public class ListagemCarrosActivity extends AppCompatActivity {
 
     private static final String ARQUIVO = "dos.santos.uildson.carconnect.MODO_LAYOUT";
     static final String IS_GRID = "IS_GRID";
@@ -47,8 +46,6 @@ public class ListagemActivity extends AppCompatActivity {
     private ActionMode actionMode;
     private int posicaoSelecionada = -1;
     private View viewSelecionada;
-
-    CarrosDatabase database;
 
     private final ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
 
@@ -94,10 +91,10 @@ public class ListagemActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        lerPreferenciaLayout();
         setContentView(R.layout.activity_listagem);
 
         recyclerViewCarros = findViewById(R.id.recyclerViewCarros);
-        database = CarrosDatabase.getDatabase(this);
         recyclerViewCarros.addOnItemTouchListener(
 
                 new RecyclerItemClickListener(
@@ -124,31 +121,39 @@ public class ListagemActivity extends AppCompatActivity {
                     }
                 }));
 
-        lerPreferenciaLayout();
-        popularLista();
-    }
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                AppDatabase database = AppDatabase.getDatabase(ListagemCarrosActivity.this);
 
-    private void lerPreferenciaLayout() {
-        shared = getSharedPreferences(ARQUIVO, Context.MODE_PRIVATE);
-        isGrid = shared.getBoolean(IS_GRID, isGrid);
+                carros = database.carroDao().getAll();
 
-        if (!shared.contains(IS_GRID)) {
-            SharedPreferences.Editor editor = shared.edit();
-            editor.putBoolean(IS_GRID, isGrid);
-            editor.apply();
-        }
+                ListagemCarrosActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        carrosAdapter = new CarrosAdapter(getApplicationContext(), carros, shared);
+                        recyclerViewCarros.setAdapter(carrosAdapter);
+
+                        setLayoutManager(isGrid);
+                    }
+                });
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.listagem_opcoes, menu);
         MenuItem item = menu.findItem(R.id.menuItemToggle);
-        item.setIcon(isGrid ? R.drawable.ic_baseline_format_list_bulleted_24 : R.drawable.ic_baseline_grid_view_24);
+        item.setIcon(isGrid ?
+                R.drawable.ic_baseline_format_list_bulleted_24
+                : R.drawable.ic_baseline_grid_view_24);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // TODO: 09/05/2023 Fazer o menu para abri carroceria
         SharedPreferences.Editor editor = shared.edit();
         switch (item.getItemId()) {
             case R.id.menuItemToggle:
@@ -161,13 +166,25 @@ public class ListagemActivity extends AppCompatActivity {
                 editor.apply();
                 return true;
             case R.id.menuItemAdicionar:
-                CadastroActivity.novoCarro(this);
+                CadastroCarroActivity.novoCarro(ListagemCarrosActivity.this);
                 return true;
             case R.id.menuItemSobre:
                 AutoriaDoApp.sobre(this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    private void lerPreferenciaLayout() {
+        shared = getSharedPreferences(ARQUIVO, Context.MODE_PRIVATE);
+        isGrid = shared.getBoolean(IS_GRID, isGrid);
+
+        if (!shared.contains(IS_GRID)) {
+            SharedPreferences.Editor editor = shared.edit();
+            editor.putBoolean(IS_GRID, isGrid);
+            editor.apply();
         }
     }
 
@@ -203,84 +220,58 @@ public class ListagemActivity extends AppCompatActivity {
     }
 
     private void popularLista() {
-        carros = database.carroDao().getAll();
-        carrosAdapter = new CarrosAdapter(this, carros, shared);
-        recyclerViewCarros.setAdapter(carrosAdapter);
-        setLayoutManager(isGrid);
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                AppDatabase database = AppDatabase.getDatabase(ListagemCarrosActivity.this);
 
-        MyItemTouchHelperCallback callback =
-                new MyItemTouchHelperCallback(carrosAdapter, recyclerViewCarros);
-        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
-        touchHelper.attachToRecyclerView(recyclerViewCarros);
+                carros = database.carroDao().getAll();
+
+                ListagemCarrosActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        carrosAdapter = new CarrosAdapter(getApplicationContext(), carros, shared);
+                        recyclerViewCarros.setAdapter(carrosAdapter);
+                        carrosAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
     }
 
     private void update() {
         Carro update = carros.get(posicaoSelecionada);
-        CadastroActivity.update(this, update);
+        CadastroCarroActivity.update(this, update);
     }
 
     private void excluir() {
         Carro carroSelecionado = carros.get(posicaoSelecionada);
-        database.carroDao().delete(carroSelecionado);
-        carros.clear();
-        carros.addAll(database.carroDao().getAll());
-        carrosAdapter.notifyDataSetChanged();
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                AppDatabase database = AppDatabase.getDatabase(ListagemCarrosActivity.this);
+
+                database.carroDao().delete(carroSelecionado);
+
+                ListagemCarrosActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        carros.remove(carroSelecionado);
+                        carrosAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == Activity.RESULT_OK) {
-            Bundle bundle = data.getExtras();
-
-            String nome = bundle.getString(CadastroActivity.NOME);
-            String carroceria = bundle.getString(CadastroActivity.CARROCERIA);
-            int portas = bundle.getInt(CadastroActivity.PORTAS);
-            float valor = bundle.getFloat(CadastroActivity.VALOR);
-            boolean blindagem = bundle.getBoolean(CadastroActivity.BLINDAGEM);
-            boolean ar_condicionado = bundle.getBoolean(CadastroActivity.AR_CONDICIONADO);
-            Combustivel combustivel = (Combustivel) bundle
-                    .getSerializable(CadastroActivity.COMBUSTIVEL);
-
-            byte[] byteArray = bundle.getByteArray(CadastroActivity.IMAGEM);
-            if (requestCode == CadastroActivity.ALTERAR) {
-                Carro selecionado = carros.get(posicaoSelecionada);
-                int idDoCarro = selecionado.getId();
-                Carro carroModificado = database.carroDao().getCarroPorId(idDoCarro);
-
-                carroModificado.setImageBytes(byteArray);
-                carroModificado.setNome(nome);
-                carroModificado.setCarroceria(carroceria);
-                carroModificado.setCombustivel(combustivel);
-                carroModificado.setPortas(portas);
-                carroModificado.setValor(valor);
-                carroModificado.setBlindagem(blindagem);
-                carroModificado.setArCondicionado(ar_condicionado);
-
-                database.carroDao().update(carroModificado);
-                carros.clear();
-                carros.addAll(database.carroDao().getAll());
-                carrosAdapter.notifyDataSetChanged();
-
-                posicaoSelecionada = -1;
-            } else {
-                Carro newCarItem = new Carro();
-
-                newCarItem.setNome(nome);
-                newCarItem.setCarroceria(carroceria);
-                newCarItem.setImageBytes(byteArray);
-                newCarItem.setPortas(portas);
-                newCarItem.setBlindagem(blindagem);
-                newCarItem.setArCondicionado(ar_condicionado);
-                newCarItem.setCombustivel(combustivel);
-                newCarItem.setValor(valor);
-
-                database.carroDao().insert(newCarItem);
-                carros.clear();
-                carros.addAll(database.carroDao().getAll());
-                carrosAdapter.notifyDataSetChanged();
-            }
+        if ((requestCode == CadastroCarroActivity.ALTERAR
+                || requestCode == CadastroCarroActivity.NOVO)
+                && resultCode == Activity.RESULT_OK) {
+            popularLista();
         }
     }
 }

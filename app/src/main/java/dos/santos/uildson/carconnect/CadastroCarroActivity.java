@@ -9,10 +9,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -32,31 +34,26 @@ import androidx.core.content.ContextCompat;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 import dos.santos.uildson.carconnect.modelo.Carro;
+import dos.santos.uildson.carconnect.modelo.Carroceria;
 import dos.santos.uildson.carconnect.modelo.Combustivel;
+import dos.santos.uildson.carconnect.persistencia.AppDatabase;
 
-public class CadastroActivity extends AppCompatActivity {
+public class CadastroCarroActivity extends AppCompatActivity {
 
+    public static final String ID = "ID";
     public static final String MODO = "MODO";
 
-    public static final String IMAGEM = "IMAGEM";
-    public static final String NOME = "NOME";
-    public static final String VALOR = "VALOR";
-    public static final String CARROCERIA = "CARROCERIA";
-    public static final String COMBUSTIVEL = "COMBUSTIVEL";
-    public static final String PORTAS = "PORTAS";
-    public static final String BLINDAGEM = "BLINDAGEM";
-    public static final String AR_CONDICIONADO = "AR_CONDICIONADO";
 
     public static final int NOVO = 1;
+    public static final int DEFAULT_VALUE = NOVO;
     public static final int ALTERAR = 2;
+    public static final int CODE_CADASTRO_CATEGORIA = 3;
     private static final int REQUEST_CODE_SELECT_IMAGE = 100;
     private static final int REQUEST_CODE_PERMISSION_READ_EXTERNAL_STORAGE = 5;
-
 
     private TextInputEditText texInputEditTextNome, texInputEditTextValor;
 
@@ -70,6 +67,9 @@ public class CadastroActivity extends AppCompatActivity {
     private ImageView imageViewCarro;
     private RadioGroup radioGroupPortas;
     private Spinner spinnerCarroceria;
+    private List<Carroceria> carroceriasDisponiveis;
+    private Carro carro;
+    private int modo;
 
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(
@@ -97,28 +97,16 @@ public class CadastroActivity extends AppCompatActivity {
 
     @SuppressWarnings("deprecation")
     public static void novoCarro(AppCompatActivity activity) {
-
-        Intent intent = new Intent(activity, CadastroActivity.class);
+        Intent intent = new Intent(activity, CadastroCarroActivity.class);
         intent.putExtra(MODO, NOVO);
         activity.startActivityForResult(intent, NOVO);
     }
 
-    public static void update(AppCompatActivity activity, Carro update) {
-        Intent intent = new Intent(activity, CadastroActivity.class);
+    @SuppressWarnings("deprecation")
+    public static void update(AppCompatActivity activity, Carro updateCarro) {
+        Intent intent = new Intent(activity, CadastroCarroActivity.class);
         intent.putExtra(MODO, ALTERAR);
-
-        byte[] byteArray = getBytes((BitmapDrawable) update.getImageDrawable());
-        intent.putExtra(IMAGEM, byteArray);
-        intent.putExtra(NOME, update.getNome());
-        intent.putExtra(VALOR, update.getValor());
-        intent.putExtra(CARROCERIA, update.getCarroceria());
-        intent.putExtra(PORTAS, update.getPortas());
-        intent.putExtra(BLINDAGEM, update.getBlindagem());
-        intent.putExtra(AR_CONDICIONADO, update.getArCondicionado());
-
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(COMBUSTIVEL, update.getCombustivel());
-        intent.putExtras(bundle);
+        intent.putExtra(ID, updateCarro.getId());
         activity.startActivityForResult(intent, ALTERAR);
     }
 
@@ -131,7 +119,7 @@ public class CadastroActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menuItemSalvar:
+            case R.id.carroceriaMenuItemSalvar:
                 salvarDados();
                 return true;
             case R.id.menuItemLimpar:
@@ -168,7 +156,7 @@ public class CadastroActivity extends AppCompatActivity {
 
         LinearLayout linearLayoutGaleria = findViewById(R.id.linearLayoutGaleria);
 
-        popularSpinnerCarroceria();
+        carregaCarroceria();
 
         linearLayoutGaleria.setOnClickListener(v -> requestReadExternalStoragePermission());
 
@@ -177,68 +165,72 @@ public class CadastroActivity extends AppCompatActivity {
 
         if (bundle != null) {
 
-            int modo = bundle.getInt(MODO, NOVO);
+            modo = bundle.getInt(MODO, DEFAULT_VALUE);
 
             if (modo == NOVO) {
                 setTitle(getString(R.string.add_carro));
+                carro = new Carro();
             } else {
 
                 setTitle(getString(R.string.alterar_carro));
 
-                String nome = bundle.getString(CadastroActivity.NOME);
-                texInputEditTextNome.setText(nome);
+                AsyncTask.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        int id = bundle.getInt(ID);
 
-                float valor = bundle.getFloat(CadastroActivity.VALOR);
-                texInputEditTextValor.setText(String.valueOf(valor));
+                        AppDatabase database = AppDatabase.getDatabase(CadastroCarroActivity.this);
 
-                String carroceria = bundle.getString(CadastroActivity.CARROCERIA);
-                ArrayAdapter<String> adapter = (ArrayAdapter<String>) spinnerCarroceria.getAdapter();
-                int count = adapter.getCount();
-                for (int i = 0; i < count; i++) {
-                    String item = adapter.getItem(i);
-                    if (item.equals(carroceria)) {
-                        spinnerCarroceria.setSelection(i);
-                        break;
+                        carro = database.carroDao().getCarroPorId(id);
+
+                        CadastroCarroActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                texInputEditTextNome.setText(carro.getNome());
+                                texInputEditTextValor.setText(String.valueOf(carro.getValor()));
+
+                                int posicao = posicaoCarroceria(carro.getCarroceriaId());
+                                spinnerCarroceria.setSelection(posicao);
+
+                                int portas = carro.getPortas();
+                                if (portas == 2) {
+                                    radioGroupPortas.check(R.id.radioButton2Portas);
+                                } else {
+                                    radioGroupPortas.check(R.id.radioButton4Portas);
+                                }
+
+                                boolean blindagem = carro.getBlindagem();
+                                checkBoxBlindado.setChecked(blindagem);
+
+                                boolean ar_condicionado = carro.getArCondicionado();
+                                checkBoxArCondicionado.setChecked(ar_condicionado);
+
+                                Combustivel combustivel = carro.getCombustivel();
+                                switch (combustivel) {
+                                    case Alcool:
+                                        checkBoxAlcool.setChecked(true);
+                                        break;
+                                    case Gasolina:
+                                        checkBoxGasolina.setChecked(true);
+                                        break;
+                                    case Diesel:
+                                        checkBoxDiesel.setChecked(true);
+                                        break;
+                                    case Eletrico:
+                                        checkBoxEletrico.setChecked(true);
+                                        break;
+                                }
+
+                                byte[] byteArray = carro.getImageBytes();
+                                Drawable imagem = new BitmapDrawable(getResources(),
+                                        BitmapFactory
+                                                .decodeByteArray(byteArray, 0, byteArray.length));
+                                imageViewCarro.setImageDrawable(imagem);
+
+                            }
+                        });
                     }
-                }
-
-
-                int portas = bundle.getInt(CadastroActivity.PORTAS);
-
-                if (portas == 2) {
-                    radioGroupPortas.check(R.id.radioButton2Portas);
-                } else {
-                    radioGroupPortas.check(R.id.radioButton4Portas);
-                }
-
-                boolean blindagem = bundle.getBoolean(CadastroActivity.BLINDAGEM);
-                checkBoxBlindado.setChecked(blindagem);
-                boolean ar_condicionado = bundle.getBoolean(CadastroActivity.AR_CONDICIONADO);
-                checkBoxArCondicionado.setChecked(ar_condicionado);
-
-
-                Combustivel combustivel = (Combustivel) bundle
-                        .getSerializable(CadastroActivity.COMBUSTIVEL);
-
-                switch (combustivel) {
-                    case Alcool:
-                        checkBoxAlcool.setChecked(true);
-                        break;
-                    case Gasolina:
-                        checkBoxGasolina.setChecked(true);
-                        break;
-                    case Diesel:
-                        checkBoxDiesel.setChecked(true);
-                        break;
-                    case Eletrico:
-                        checkBoxEletrico.setChecked(true);
-                        break;
-                }
-
-                byte[] byteArray = bundle.getByteArray(CadastroActivity.IMAGEM);
-                Drawable imagem = new BitmapDrawable(getResources(),
-                        BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length));
-                imageViewCarro.setImageDrawable(imagem);
+                });
             }
         }
         texInputEditTextNome.requestFocus();
@@ -249,34 +241,10 @@ public class CadastroActivity extends AppCompatActivity {
         }
     }
 
-
     @SuppressWarnings("deprecation")
     private void openGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE);
-    }
-
-    public void popularSpinnerCarroceria() {
-        ArrayList<String> carrocerias = new ArrayList<>();
-
-        carrocerias.add(getString(R.string.hatch));
-        carrocerias.add(getString(R.string.sedan));
-        carrocerias.add(getString(R.string.suv));
-        carrocerias.add(getString(R.string.crossover));
-        carrocerias.add(getString(R.string.minivan));
-        carrocerias.add(getString(R.string.picape));
-        carrocerias.add(getString(R.string.wagon));
-        carrocerias.add(getString(R.string.conversivel));
-        carrocerias.add(getString(R.string.cupe));
-        carrocerias.add(getString(R.string.luxo));
-
-        Collections.sort(carrocerias);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1,
-                carrocerias);
-
-        spinnerCarroceria.setAdapter(adapter);
     }
 
     public void limparCampos() {
@@ -295,24 +263,37 @@ public class CadastroActivity extends AppCompatActivity {
 
     public void salvarDados() {
         Drawable imagemCarro = imageViewCarro.getDrawable();
-        String nome = Objects.requireNonNull(texInputEditTextNome.getText()).toString();
-        String valorString = Objects.requireNonNull(texInputEditTextValor.getText()).toString();
-        String carroceria = (String) spinnerCarroceria.getSelectedItem();
-        int portaId = radioGroupPortas.getCheckedRadioButtonId();
+        byte[] byteArray = getBytes((BitmapDrawable) imagemCarro);
+        carro.setImageBytes(byteArray);
 
+        int portaId = radioGroupPortas.getCheckedRadioButtonId();
+        if (portaId == -1) {
+            Toast.makeText(this,
+                    getString(R.string.porta_nao_selecionada),
+                    Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            RadioButton radioButtonSelecionado = findViewById(portaId);
+            carro.setPortas(Integer.parseInt(radioButtonSelecionado.getTag().toString()));
+        }
+
+        String nome = Objects.requireNonNull(texInputEditTextNome.getText()).toString();
         if (nome.trim().isEmpty()) {
             texInputEditTextNome.setError(getString(R.string.nome_invalido));
             texInputEditTextNome.requestFocus();
             return;
         }
+        carro.setNome(nome);
 
-        Carro addCarro = new Carro();
-        addCarro.setNome(nome);
-        addCarro.setCarroceria(carroceria);
+        Carroceria carroceriaEscolhida = (Carroceria) spinnerCarroceria.getSelectedItem();
+        if (carroceriaEscolhida != null){
+            carro.setCarroceriaId(carroceriaEscolhida.getId());
+        }
 
+        String valorString = Objects.requireNonNull(texInputEditTextValor.getText()).toString();
         try {
             float valor = Float.parseFloat(valorString);
-            addCarro.setValor(valor);
+            carro.setValor(valor);
         } catch (NumberFormatException e) {
             texInputEditTextValor.setError(getString(R.string.preco_invalido));
             texInputEditTextValor.requestFocus();
@@ -320,13 +301,13 @@ public class CadastroActivity extends AppCompatActivity {
         }
 
         if (checkBoxGasolina.isChecked()) {
-            addCarro.setCombustivel(Combustivel.Gasolina);
+            carro.setCombustivel(Combustivel.Gasolina);
         } else if (checkBoxAlcool.isChecked()) {
-            addCarro.setCombustivel(Combustivel.Alcool);
+            carro.setCombustivel(Combustivel.Alcool);
         } else if (checkBoxDiesel.isChecked()) {
-            addCarro.setCombustivel(Combustivel.Diesel);
+            carro.setCombustivel(Combustivel.Diesel);
         } else if (checkBoxEletrico.isChecked()) {
-            addCarro.setCombustivel(Combustivel.Eletrico);
+            carro.setCombustivel(Combustivel.Eletrico);
         } else {
             Toast.makeText(
                     getApplicationContext(),
@@ -335,45 +316,24 @@ public class CadastroActivity extends AppCompatActivity {
             return;
         }
 
-        if (portaId == -1) {
-            Toast.makeText(this,
-                    getString(R.string.porta_nao_selecionada),
-                    Toast.LENGTH_SHORT).show();
-            return;
-        } else {
-            RadioButton radioButtonSelecionado = findViewById(portaId);
-            addCarro.setPortas(Integer.parseInt(radioButtonSelecionado.getTag().toString()));
-        }
+        carro.setArCondicionado(checkBoxArCondicionado.isChecked());
+        carro.setBlindagem(checkBoxBlindado.isChecked());
 
-        addCarro.setArCondicionado(checkBoxArCondicionado.isChecked());
-        addCarro.setBlindagem(checkBoxBlindado.isChecked());
-        byte[] byteArray = getBytes((BitmapDrawable) imagemCarro);
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                AppDatabase database = AppDatabase.getDatabase(CadastroCarroActivity.this);
 
-        Intent intent = new Intent();
-        intent.putExtra(IMAGEM, byteArray);
-        intent.putExtra(NOME, addCarro.getNome());
-        intent.putExtra(VALOR, addCarro.getValor());
-        intent.putExtra(CARROCERIA, addCarro.getCarroceria());
-        intent.putExtra(PORTAS, addCarro.getPortas());
-        intent.putExtra(BLINDAGEM, addCarro.getBlindagem());
-        intent.putExtra(AR_CONDICIONADO, addCarro.getArCondicionado());
+                if (modo == NOVO) {
+                    database.carroDao().insert(carro);
+                } else {
+                    database.carroDao().update(carro);
+                }
 
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(COMBUSTIVEL, addCarro.getCombustivel());
-        intent.putExtras(bundle);
-
-        setResult(Activity.RESULT_OK, intent);
-        finish();
-    }
-
-    @NonNull
-    private static byte[] getBytes(BitmapDrawable imagemCarro) {
-        Bitmap bitmap = imagemCarro.getBitmap();
-        Bitmap resizedImage = resizeImage(bitmap, 512, 512);
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        resizedImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        return byteArray;
+                setResult(Activity.RESULT_OK);
+                finish();
+            }
+        });
     }
 
     public void cancelar() {
@@ -410,6 +370,20 @@ public class CadastroActivity extends AppCompatActivity {
             Uri imageUri = data.getData();
             imageViewCarro.setImageURI(imageUri);
         }
+        if (requestCode == CODE_CADASTRO_CATEGORIA &&
+                (resultCode == Activity.RESULT_OK || resultCode == Activity.RESULT_CANCELED)){
+            carregaCarroceria();
+        }
+    }
+
+    @NonNull
+    private static byte[] getBytes(BitmapDrawable imagemCarro) {
+        Bitmap bitmap = imagemCarro.getBitmap();
+        Bitmap resizedImage = resizeImage(bitmap, 512, 512);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        resizedImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
     }
 
     public static Bitmap resizeImage(Bitmap image, int maxWidth, int maxHeight) {
@@ -433,5 +407,46 @@ public class CadastroActivity extends AppCompatActivity {
         } else {
             return null;
         }
+    }
+
+    private int posicaoCarroceria(int carroceriaId){
+
+        for (int pos = 0; pos < carroceriasDisponiveis.size(); pos++){
+            Carroceria carroceria = carroceriasDisponiveis.get(pos);
+
+            if (carroceria.getId() == carroceriaId){
+                return pos;
+            }
+        }
+
+        return -1;
+    }
+
+    private void carregaCarroceria(){
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                AppDatabase database = AppDatabase.getDatabase(CadastroCarroActivity.this);
+
+                carroceriasDisponiveis = database.carroceriaDao().queryAll();
+
+                CadastroCarroActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ArrayAdapter<Carroceria> spinnerAdapter =
+                                new ArrayAdapter<>(CadastroCarroActivity.this,
+                                        android.R.layout.simple_list_item_1,
+                                        carroceriasDisponiveis);
+
+                        spinnerCarroceria.setAdapter(spinnerAdapter);
+                    }
+                });
+            }
+        });
+    }
+
+    public void addNewCarroceria(View view) {
+        ListagemCarroceriasActivity.abrir(this, CODE_CADASTRO_CATEGORIA);
     }
 }

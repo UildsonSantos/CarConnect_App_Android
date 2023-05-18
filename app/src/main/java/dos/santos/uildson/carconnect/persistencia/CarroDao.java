@@ -12,18 +12,22 @@ import dos.santos.uildson.carconnect.modelo.Carro;
 
 @Dao
 public interface CarroDao {
-    @Query("SELECT * FROM carros")
-    List<Carro> getAll();
 
     @Insert
     long insert(Carro carro);
 
-    @Update
-    void update(Carro carro);
-
     @Delete
     void delete(Carro carro);
 
+    @Update
+    void update(Carro carro);
+
     @Query("SELECT * FROM carros WHERE id = :id")
     Carro getCarroPorId(int id);
+
+    @Query("SELECT * FROM carros")
+    List<Carro> getAll();
+
+    @Query("SELECT count(*) FROM carros WHERE carroceriaId = :id LIMIT 1")
+    int carroceriaEmUsoPorId(long id);
 }

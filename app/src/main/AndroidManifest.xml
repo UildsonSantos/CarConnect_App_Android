@@ -3,8 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!--    TODO: android.permission.CAMERA-->
-    <!--    <uses-permission android:name="android.permission.CAMERA" />-->
 
     <application
         android:allowBackup="true"
@@ -13,34 +11,50 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CarConnect"
-        android:largeHeap="true"
         tools:targetApi="31">
         <activity
-            android:name=".CadastroActivity"
-            android:parentActivityName=".ListagemActivity"
+            android:name=".ListagemCarroceriasActivity"
+            android:parentActivityName=".ListagemCarrosActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
-
+        </activity>
+        <activity
+            android:name=".CadastroCarroceriaActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".CadastroCarroActivity"
+            android:exported="false"
+            android:parentActivityName=".ListagemCarrosActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ListagemCarrosActivity" />
         </activity>
         <activity
             android:name=".AutoriaDoApp"
-            android:parentActivityName=".ListagemActivity"
-            android:exported="false">
+            android:exported="false"
+            android:parentActivityName=".ListagemCarrosActivity">
             <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ListagemCarrosActivity" />
         </activity>
         <activity
-            android:name=".ListagemActivity"
+            android:name=".ListagemCarrosActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,8 +62,5 @@
             </intent-filter>
         </activity>
     </application>
-    <!--    <uses-feature-->
-    <!--        android:name="android.hardware.camera"-->
-    <!--        android:required="false" />-->
 
 </manifest>

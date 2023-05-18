@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menuItemDone"
+        android:icon="@drawable/ic_baseline_done"
+        android:title="@string/feito"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menuItemNovo"
+        android:icon="@android:drawable/ic_input_add"
+        android:title="@string/novo"
+        app:showAsAction="always" />
+</menu>

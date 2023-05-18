@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CadastroActivity">
+    tools:context=".CadastroCarroActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/activity_main"
@@ -237,6 +237,16 @@
                 app:layout_constraintTop_toBottomOf="@+id/textViewCadastro" />
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btnAdicionarCarroceria"
+            android:layout_width="46dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:onClick="addNewCarroceria"
+            android:text="+"
+            app:layout_constraintStart_toEndOf="@+id/spinnerCarroceria"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCarroceriaItem" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

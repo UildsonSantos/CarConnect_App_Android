@@ -85,22 +85,18 @@
         <item>@string/dourada</item>
     </string-array>
 
-
-    <string-array name="carroceria">
+    <string-array name="carrocerias">
         <item>@string/conversivel</item>
+        <item>@string/wagon</item>
+        <item>@string/crossover</item>
         <item>@string/cupe</item>
-        <item>@string/cupe</item>
+        <item>@string/minivan</item>
+        <item>@string/cupe_super_esportivo</item>
+        <item>@string/hatch</item>
+        <item>@string/suv</item>
+        <item>@string/luxo</item>
         <item>@string/picape</item>
-        <item>@string/cupe</item>
-        <item>@string/suv</item>
-        <item>@string/cupe</item>
-        <item>@string/conversivel</item>
         <item>@string/sedan</item>
-        <item>@string/suv</item>
-        <item>@string/conversivel</item>
-        <item>@string/sedan</item>
-        <item>@string/cupe_super_esportivo</item>
-        <item>@string/cupe_super_esportivo</item>
     </string-array>
 
     <integer-array name="combustivel">

@@ -1,10 +1,13 @@
 package dos.santos.uildson.carconnect;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,7 +20,8 @@ import java.util.List;
 import java.util.Locale;
 
 import dos.santos.uildson.carconnect.modelo.Carro;
-import dos.santos.uildson.carconnect.persistencia.CarrosDatabase;
+import dos.santos.uildson.carconnect.modelo.Carroceria;
+import dos.santos.uildson.carconnect.persistencia.AppDatabase;
 
 public class CarrosAdapter extends RecyclerView.Adapter<CarrosAdapter.CarroHolder> {
 
@@ -31,7 +35,6 @@ public class CarrosAdapter extends RecyclerView.Adapter<CarrosAdapter.CarroHolde
     private List<Carro> carrosRemovidos;
     private Carro carroRemovidoRecente;
     private int posicaoCarroRemovidoRecente;
-
 
     public static class CarroHolder extends RecyclerView.ViewHolder {
 
@@ -62,28 +65,13 @@ public class CarrosAdapter extends RecyclerView.Adapter<CarrosAdapter.CarroHolde
         this.carros = carros;
         this.context = context;
         this.sharedPreferences = sharedPreferences;
-        this.isGridView = sharedPreferences.getBoolean(ListagemActivity.IS_GRID, isGridView);
+        this.isGridView = sharedPreferences.getBoolean(ListagemCarrosActivity.IS_GRID, isGridView);
 
         numberFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
 
         carrosRemovidos = new ArrayList<>();
     }
 
-    public void removeItem(int position) {
-        carroRemovidoRecente = carros.get(position);
-        posicaoCarroRemovidoRecente = position;
-        carros.remove(position);
-        carrosRemovidos.add(carroRemovidoRecente);
-        notifyItemRemoved(position);
-
-        CarrosDatabase.getDatabase(context).carroDao().delete(carroRemovidoRecente);
-    }
-
-    public void undoLastRemoval() {
-        carros.add(posicaoCarroRemovidoRecente, carroRemovidoRecente);
-        carrosRemovidos.remove(carroRemovidoRecente);
-        notifyItemInserted(posicaoCarroRemovidoRecente);
-    }
 
     @NonNull
     @Override
@@ -142,8 +130,28 @@ public class CarrosAdapter extends RecyclerView.Adapter<CarrosAdapter.CarroHolde
 
         String strPort = Integer.toString(carros.get(position).getPortas());
         holder.textViewPortasItem.setText(strPort);
-        holder.textViewCarroceriaItem.setText(carros.get(position).getCarroceria());
+
+        int idCarroceria = carros.get(position).getCarroceriaId();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                AppDatabase database = AppDatabase.getDatabase(context);
+                Carroceria carroceria = database.carroceriaDao().getCarroceriaById(idCarroceria);
+                Runnable updateUI = new Runnable() {
+                    @Override
+                    public void run() {
+                        holder.textViewCarroceriaItem.setText(carroceria.getDescricao());
+                    }
+                };
+
+                // Executa o Runnable na UI Thread utilizando o método runOnUiThread()
+                ((Activity)context).runOnUiThread(updateUI);
+            }
+        }).start();
+
     }
+
 
     @Override
     public int getItemCount() {
